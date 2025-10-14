@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-import AccountActions from "../sidebar/AccountActions";
 import ChatHistory from "../sidebar/ChatHistory";
 import NavLinks from "../sidebar/NavLinks";
 import UserProfile from "../sidebar/UserProfile";
@@ -18,13 +17,12 @@ const Sidebar = async () => {
   console.log("data", user);
 
   return (
-    <aside className="fixed top-[72px] left-0 z-10 w-[260px] h-screen bg-white border-r border-gray-200 p-4">
-      {/* 사이드바 콘텐츠가 위에서부터 시작되도록 수정 */}
-      <div>
+    <aside className="fixed top-[72px] left-0 z-10 w-[260px] bottom-0 bg-white border-r border-gray-200 p-4">
+      <div className="flex flex-col h-full">
         <UserProfile user_data={user_data}></UserProfile>
         <NavLinks></NavLinks>
         <ChatHistory></ChatHistory>
-        <AccountActions></AccountActions>
+        {/* <AccountActions></AccountActions> */}
       </div>
     </aside>
   );

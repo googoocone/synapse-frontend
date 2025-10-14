@@ -1,3 +1,4 @@
+import testImage from "@/assets/test.png";
 import Image from "next/image";
 
 const UserProfile = ({ user_data }) => {
@@ -9,7 +10,7 @@ const UserProfile = ({ user_data }) => {
     <div className="w-full h-[62px] flex items-center justify-start border rounded-full p-2 border-black/10 gap-2 ">
       <div className="rounded-full">
         <Image
-          src={user_profile}
+          src={user_profile ?? testImage}
           alt="user_profile"
           width={44}
           height={44}

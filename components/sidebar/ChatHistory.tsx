@@ -1,5 +1,5 @@
 const ChatHistory = () => {
-  return <div>ChatHistory</div>;
+  return <div className="flex-1 overflow-y-auto">ChatHistory</div>;
 };
 
 export default ChatHistory;
