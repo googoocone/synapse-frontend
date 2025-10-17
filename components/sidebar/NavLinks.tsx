@@ -22,13 +22,13 @@ const NavLinks = () => {
       */}
       <Link
         href="/"
-        onClick={() => setSelectedButton("Home")}
+        onClick={() => setSelectedButton("+ 새 대화 시작")}
         className={`${commonLinkStyles} ${
-          selectedButton === "Home" ? "bg-[#d9d9d9]/30" : ""
+          selectedButton === "+ 새 대화 시작" ? "bg-[#d9d9d9]/30" : ""
         }`}
       >
-        <Image src={home} width={18} height={18} alt="home"></Image>
-        Home
+        <Image src={home} width={18} height={18} alt="home"></Image>+ 새 대화
+        시작
       </Link>
 
       <Link

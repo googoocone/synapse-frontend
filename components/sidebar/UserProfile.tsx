@@ -4,7 +4,6 @@ import Image from "next/image";
 const UserProfile = ({ user_data }) => {
   const user_profile = user_data.avatar_url;
   const user_datas = user_data;
-  console.log("user_datas", user_datas);
 
   return (
     <div className="w-full h-[62px] flex items-center justify-start border rounded-full p-2 border-black/10 gap-2 ">

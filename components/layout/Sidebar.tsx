@@ -14,7 +14,6 @@ const Sidebar = async () => {
   } = await supabase.auth.getUser();
 
   const user_data = user?.user_metadata ?? {};
-  console.log("data", user);
 
   return (
     <aside className="fixed top-[72px] left-0 z-10 w-[260px] bottom-0 bg-white border-r border-gray-200 p-4">
