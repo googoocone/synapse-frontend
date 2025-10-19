@@ -1,6 +1,5 @@
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -31,10 +30,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header></Header>
-        <Sidebar></Sidebar>
-        <main className="pt-[72px] pl-[240px] h-screen overflow-y-auto">
-          {children}
-        </main>
+
+        <main className="pt-[72px]  h-screen overflow-y-auto">{children}</main>
         <Footer></Footer>
       </body>
     </html>

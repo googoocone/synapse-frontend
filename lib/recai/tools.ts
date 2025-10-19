@@ -32,7 +32,7 @@ export const findRelevantVideoTool = new DynamicTool({
     try {
       const userQueryText = norm(toolInput);
 
-      const cookieStore = cookies();
+      const cookieStore = await cookies();
       const supabase = await createClient(cookieStore);
 
       // 1) 키워드 추출 (실패 시 원문 사용)
@@ -106,13 +106,11 @@ ${JSON.stringify(compact)}
       } catch {
         // 폴백: 점수·이유 없이 순서만
         ranked = {
-          ranked: compact
-            .slice(0, 3)
-            .map((x: any, i: number) => ({
-              id: x.id,
-              score: 50 - i,
-              reason: "fallback",
-            })),
+          ranked: compact.slice(0, 3).map((x: any, i: number) => ({
+            id: x.id,
+            score: 50 - i,
+            reason: "fallback",
+          })),
         };
       }
 

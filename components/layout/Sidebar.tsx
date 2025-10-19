@@ -6,7 +6,7 @@ import NavLinks from "../sidebar/NavLinks";
 import UserProfile from "../sidebar/UserProfile";
 
 const Sidebar = async () => {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabase = await createClient();
 
   const {

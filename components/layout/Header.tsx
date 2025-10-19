@@ -1,51 +1,70 @@
 // components/Header.tsx
 
 import logoImage from "@/assets/logo.png";
-import LogoutButton from "@/components/ui/LogoutButton"; // 2단계에서 만들 로그아웃 버튼
-import { createClient } from "@/utils/supabase/server"; // 서버용 클라이언트
+import LogoutButton from "@/components/ui/LogoutButton";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
-// 1. 컴포넌트를 async 함수로 변경
 export default async function Header() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabase = await createClient();
 
-  // 2. 서버에서 현재 사용자 정보를 가져옵니다.
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   return (
-    <header className="fixed top-0 left-0 z-20 w-full h-[72px] flex items-center justify-between px-4 sm:px-8 border-b border-black/10 bg-white">
-      {/* 로고를 클릭하면 홈으로 이동하도록 Link 추가 */}
+    <header className="fixed top-0 left-0 z-20 w-full h-[72px] flex items-center justify-between px-6 sm:px-8 border-b border-black/10 bg-white">
+      {/* 로고 */}
       <Link href="/" className="flex items-center justify-center gap-2">
-        <Image src={logoImage} alt="Synapse AI 로고" width={36} height={34} />
-        <p className="font-bold text-lg hidden sm:block">Synapse AI</p>
+        <Image src={logoImage} alt="Synapse AI 로고" width={48} height={48} />
+        <p className="font-bold text-lg hidden sm:block">Korea Riches</p>
       </Link>
 
-      {/* 3. 로그인 상태에 따라 다른 UI를 보여줍니다. */}
-      <div className="flex items-center justify-center gap-3 text-sm">
+      {/* 수정된 nav 부분 */}
+      <nav className="flex-1">
+        <ul className="flex flex-row items-center justify-center gap-8">
+          <Link
+            href="/"
+            className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
+          >
+            홈
+          </Link>
+          <Link
+            href="/blog"
+            className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
+          >
+            창업사례
+          </Link>
+          <Link
+            href="/discovery"
+            className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
+          >
+            창업 아이템 추천
+          </Link>
+        </ul>
+      </nav>
+
+      <div className="flex items-center justify-end gap-3 text-sm ">
         {user ? (
-          // 로그인된 경우
           <>
             <span className="hidden sm:block">{user.email}</span>
             <LogoutButton />
           </>
         ) : (
-          // 로그아웃된 경우
           <>
             <Link href="/login">
-              <button className="px-4 py-1.5 rounded-full bg-black text-white hover:bg-gray-800 transition-colors">
-                로그인
+              <button className="px-4 py-2 rounded-md bg-[#214061] text-white hover:bg-[#214061]/80 transition-colors cursor-pointer">
+                시작하기
               </button>
             </Link>
-            <Link href="/signup">
+            {/* <Link href="/signup">
               <button className="px-4 py-1.5 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors">
                 무료로 회원가입
               </button>
-            </Link>
+            </Link> */}
           </>
         )}
       </div>
