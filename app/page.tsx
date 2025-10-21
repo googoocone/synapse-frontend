@@ -24,10 +24,6 @@ const HomePage = () => {
       // 1️⃣ tags가 문자열로 저장된 경우 ("커머스, 쇼핑몰")
       //    → LIKE 검색으로 포함된 경우 찾기
       query = query.contains("tags", [category]);
-
-      // 2️⃣ tags가 JSON 배열로 저장된 경우 ["커머스", "쇼핑몰"]
-      //    → contains([])로 검색 가능
-      // query = query.contains("tags", [category]);
     }
 
     const { data, error } = await query;
@@ -40,13 +36,13 @@ const HomePage = () => {
   }, [activeCategory]);
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* --- 상단 섹션 --- */}
       <section className="flex flex-col lg:flex-row lg:justify-between gap-8 items-center mb-12">
         <div className="flex flex-col space-y-6 w-full lg:w-auto">
           <h1 className="text-4xl font-extrabold text-gray-900 leading-tight">
             성공이 필요한 순간, <br />
-            국내 1인 창업의 성공 사례를 살펴보세요
+            국내 1인 창업의 성공 공식을 알려드립니다
           </h1>
           <div className="relative">
             <Search
