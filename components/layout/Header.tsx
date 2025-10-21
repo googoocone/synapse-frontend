@@ -20,13 +20,14 @@ export default async function Header() {
       {/* 로고 */}
       <Link href="/" className="flex items-center justify-center gap-2">
         <Image src={logoImage} alt="Synapse AI 로고" width={48} height={48} />
-        <p className="font-bold text-lg hidden sm:block">Korea Riches</p>
+        <p className="font-bold text-lg hidden sm:block text-[#214061]/80">
+          Korea Riches
+        </p>
       </Link>
 
-      {/* 수정된 nav 부분 */}
       <nav className="flex-1">
         <ul className="flex flex-row items-center justify-center gap-8">
-          <Link
+          {/* <Link
             href="/"
             className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
           >
@@ -43,7 +44,7 @@ export default async function Header() {
             className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
           >
             창업 아이템 추천
-          </Link>
+          </Link> */}
         </ul>
       </nav>
 

@@ -1,4 +1,3 @@
-import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -30,9 +29,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header></Header>
-
-        <main className="pt-[72px]  h-screen overflow-y-auto">{children}</main>
-        <Footer></Footer>
+        <main className="h-screen mt-[100px]">{children}</main>
+        {/* <Footer></Footer> */}
       </body>
     </html>
   );
