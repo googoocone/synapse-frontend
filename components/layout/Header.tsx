@@ -16,13 +16,10 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="fixed top-0 left-0 z-20 w-full h-[72px] flex items-center justify-between px-6 sm:px-8 border-b border-black/10 bg-white">
+    <header className="fixed top-0 left-0 z-20 w-full h-[72px] flex items-center justify-between px-6 sm:px-8 border-b border-black/10 bg-[#080807]">
       {/* 로고 */}
       <Link href="/" className="flex items-center justify-center gap-2">
         <Image src={logoImage} alt="Synapse AI 로고" width={48} height={48} />
-        <p className="font-bold text-lg hidden sm:block text-[#214061]/80">
-          Korea Riches
-        </p>
       </Link>
 
       <nav className="flex-1">

@@ -18,6 +18,10 @@
   margin-bottom: 0.5rem;
 }
 
+[data-content-type="divider"] hr {
+  border-top: 1px solid #00ef86 !important;
+}
+
 /* ★★★★★
    h1 태그 대신 data-content-type="heading"과 data-level="1"을 타겟팅합니다.
    이것이 '제목1' 블록입니다.
@@ -39,21 +43,10 @@
   }
 
   .bn-default-styles h3 {
-    font-size: 24px !important;
+    font-size: 28px !important;
   }
 
-  /* 모바일 패딩 */
-  [data-blocknote-editor] {
-    padding: 0.75rem !important;
-  }
-
-  /* 모바일 본문 */
-  [data-blocknote-editor] [data-content-type="paragraph"] {
-    font-size: 14px !important;
-  }
-
-  /* 모바일 제목1 */
-  [data-blocknote-editor] [data-content-type="heading"][data-level="1"] {
-    font-size: 24px !important;
+  [data-content-type="divider"] hr {
+    border-top: 1px solid #00ef86 !important;
   }
 }
