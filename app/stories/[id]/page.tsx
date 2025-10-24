@@ -47,7 +47,7 @@ const StoryDetailPage = async ({ params }: Props) => {
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-gray-100">
       <div className="relative w-full h-64 md:h-96 bg-gray-200">
         <div
           className="absolute inset-0 bg-cover bg-center"

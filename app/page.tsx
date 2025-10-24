@@ -8,9 +8,10 @@ import { createClient } from "@/utils/supabase/client";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import cardImage1 from "@/assets/Rectangle 24.png";
-import cardImage2 from "@/assets/Rectangle 25.png";
-import cardImage3 from "@/assets/Rectangle 26.png";
+import cardImage1 from "@/assets/profile23.png";
+import cardImage2 from "@/assets/profile26.png";
+import cardImage3 from "@/assets/profile24.png";
+import Link from "next/link";
 
 const HomePage = () => {
   const supabase = createClient();
@@ -54,9 +55,11 @@ const HomePage = () => {
           <div className="text-[14px] font-semibold">
             이미 성공한 "1인 창업가"들의 노하우를 구독하세요
           </div>
-          <button className="mt-[32px] w-[380px] h-[50px] bg-black/90 text-white font-semibold rounded-md cursor-pointer">
-            Foundary 가입하기
-          </button>
+          <Link href="/login">
+            <button className="mt-[32px] w-[380px] h-[50px] bg-black/90 text-white font-semibold rounded-md cursor-pointer">
+              Foundary 가입하기
+            </button>
+          </Link>
         </div>
       </section>
 
@@ -69,33 +72,33 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {/* 카드 1 (Group 27.png) */}
           <NewFoundaryCard
-            href="/story/1"
+            href="/stories/23"
             imageUrl={cardImage1} // (1)에서 import한 이미지
-            category="여성셰어하우스"
+            category="아마존구매대행"
             categoryStyle="bg-yellow-400 text-black" // 스크린샷의 노란색
-            title="부업으로 월 2,000만 원, 공간 임대업 '마스터피스' 이야기"
-            tag="임대업"
-            amount="2,000만원"
+            title="퇴사 2주 만에 월 1,000만원, 아마존 구매대행"
+            tag="구매대행"
+            amount="1,000만원"
           />
 
           {/* 카드 2 (스크린샷 참고) */}
           <NewFoundaryCard
-            href="/story/2"
+            href="/stories/26"
             imageUrl={cardImage2} // (1)에서 import한 이미지
-            category="개인/법인회생"
+            category="홈페이지 제작"
             categoryStyle="bg-[#624AF1] text-white" // 스크린샷의 파란색
-            title="부업으로 월 1,000만 원, 커머스 사업으로 대박난 썰"
-            tag="커머스"
+            title="템플릿+AI로 일주일에 300, 대학생 월 매출 2,000만 원 대학생"
+            tag="지식창업"
             amount="2,000만원"
           />
 
           {/* 카드 3 (스크린샷 참고) */}
           <NewFoundaryCard
-            href="/story/3"
+            href="/stories/24"
             imageUrl={cardImage3} // (1)에서 import한 이미지
             category="전문직마케팅"
             categoryStyle="bg-red-600 text-white" // 스크린샷의 빨간색
-            title="노가다 관두고 사니어 편의점으로 연 5억 버는 32살 블랙잭"
+            title="대리기사 관두고 인플루언서 공동구매 사업가로 "
             tag="마케팅"
             amount="2,000만원"
           />

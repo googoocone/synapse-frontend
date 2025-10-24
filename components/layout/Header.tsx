@@ -24,15 +24,16 @@ export default async function Header() {
       </Link>
 
       <nav className="flex-1">
-        <ul className="flex flex-row items-center justify-center text-[32px] font-black text-white">
-          Foundary
-        </ul>
+        <Link href="/">
+          <ul className="flex flex-row items-center justify-center text-[32px] font-black text-white">
+            Foundary
+          </ul>
+        </Link>
       </nav>
 
       <div className="flex items-center justify-end gap-3 text-sm ">
         {user ? (
           <>
-            <span className="hidden sm:block">{user.email}</span>
             <LogoutButton />
           </>
         ) : (
