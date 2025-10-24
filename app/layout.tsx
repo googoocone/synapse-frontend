@@ -28,13 +28,10 @@ export default function RootLayout({
       <body
         className={`${pretendard.className} antialiased w-full bg-gray-100`} // w-full 유지
       >
-        {/* Header 컴포넌트 내부에서 중앙 정렬을 처리 */}
         <Header></Header>
-
         <main className="w-[1200px] h-screen mt-[60px] mx-auto">
           {children}
         </main>
-        {/* <Footer></Footer> */}
       </body>
     </html>
   );
