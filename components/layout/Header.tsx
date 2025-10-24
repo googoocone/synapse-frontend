@@ -2,6 +2,7 @@
 
 import logoImage from "@/assets/logo.png";
 import LogoutButton from "@/components/ui/LogoutButton";
+import Menu from "@/assets/menu.png";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import Image from "next/image";
@@ -16,32 +17,15 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="fixed top-0 left-0 z-20 w-full h-[72px] flex items-center justify-between px-6 sm:px-8 border-b border-black/10 bg-[#080807]">
+    <header className="fixed  top-0 left-0 right-0 mx-auto z-20 w-[1200px] h-[50px] flex items-center justify-between px-6 sm:px-8 bg-[#FF7A00] rounded-md">
       {/* 로고 */}
       <Link href="/" className="flex items-center justify-center gap-2">
-        <Image src={logoImage} alt="Synapse AI 로고" width={48} height={48} />
+        <Image src={Menu} alt="Synapse AI 로고" width={24} height={24} />
       </Link>
 
       <nav className="flex-1">
-        <ul className="flex flex-row items-center justify-center gap-8">
-          {/* <Link
-            href="/"
-            className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
-          >
-            홈
-          </Link>
-          <Link
-            href="/blog"
-            className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
-          >
-            창업사례
-          </Link>
-          <Link
-            href="/discovery"
-            className="text-md font-medium text-muted-foreground hover:text-foreground transition-colors text-[#214061]/60 hover:text-[#214061]"
-          >
-            창업 아이템 추천
-          </Link> */}
+        <ul className="flex flex-row items-center justify-center text-[32px] font-black text-white">
+          Foundary
         </ul>
       </nav>
 
@@ -54,8 +38,8 @@ export default async function Header() {
         ) : (
           <>
             <Link href="/login">
-              <button className="px-4 py-2 rounded-md bg-[#214061] text-white hover:bg-[#214061]/80 transition-colors cursor-pointer">
-                시작하기
+              <button className="px-4 py-2 rounded-md bg-white text-black hover:bg-[#214061]/80 hover:text-white font-semibold transition-colors cursor-pointer">
+                로그인
               </button>
             </Link>
             {/* <Link href="/signup">

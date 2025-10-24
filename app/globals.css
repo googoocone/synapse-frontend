@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
+@layer base {
+  /* html과 body에 Tailwind의 'font-sans' 유틸리티를 적용 */
+  html,
+  body {
+    @apply font-sans; /* 👈 이렇게 수정해야 합니다! */
+  }
+}
+
 * {
   box-sizing: border-box;
 }
-/* Tailwind CSS 기본 지시어 아래에 추가 */
-
 /* --- 1. 기본 스타일 (데스크탑) --- */
 
 /* 패딩 (이건 기존과 동일) */

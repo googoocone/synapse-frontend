@@ -1,16 +1,16 @@
 import Header from "@/components/layout/Header";
+import localFont from "next/font/local";
+
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google"; // 👈 Inter로 변경
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Inter 폰트 정의
+const pretendard = localFont({
+  src: "../fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "100 900",
+  variable: "--font-pretendard",
 });
 
 export const metadata: Metadata = {
@@ -24,12 +24,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko" className={`${pretendard.variable} bg-gray-100`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${pretendard.className} antialiased w-full bg-gray-100`} // w-full 유지
       >
+        {/* Header 컴포넌트 내부에서 중앙 정렬을 처리 */}
         <Header></Header>
-        <main className="h-screen mt-[100px]">{children}</main>
+
+        <main className="w-[1200px] h-screen mt-[60px] mx-auto">
+          {children}
+        </main>
         {/* <Footer></Footer> */}
       </body>
     </html>

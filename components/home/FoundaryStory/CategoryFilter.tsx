@@ -10,6 +10,7 @@ const categories = [
   "콘텐츠 제작",
   "지식 창업",
   "오프라인 소매",
+  "임대업",
 ];
 
 interface CategoryFilterProps {
