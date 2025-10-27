@@ -2,15 +2,13 @@
 
 import StoryCard from "@/components/home/FoundaryStory/Card";
 import CategoryFilter from "@/components/home/FoundaryStory/CategoryFilter";
-import ImageSlider from "@/components/home/ImageSlider";
 import NewFoundaryCard from "@/components/home/NewFoundarySection/NewFoundaryCard";
 import { createClient } from "@/utils/supabase/client";
-import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import cardImage1 from "@/assets/profile23.png";
-import cardImage2 from "@/assets/profile26.png";
 import cardImage3 from "@/assets/profile24.png";
+import cardImage2 from "@/assets/profile26.png";
 import Link from "next/link";
 
 const HomePage = () => {
@@ -74,7 +72,7 @@ const HomePage = () => {
           <NewFoundaryCard
             href="/stories/23"
             imageUrl={cardImage1} // (1)에서 import한 이미지
-            category="아마존구매대행"
+            category="아마존 구매대행"
             categoryStyle="bg-yellow-400 text-black" // 스크린샷의 노란색
             title="퇴사 2주 만에 월 1,000만원, 아마존 구매대행"
             tag="구매대행"
@@ -85,7 +83,7 @@ const HomePage = () => {
           <NewFoundaryCard
             href="/stories/26"
             imageUrl={cardImage2} // (1)에서 import한 이미지
-            category="홈페이지 제작"
+            category="노 코딩 홈페이지 제작"
             categoryStyle="bg-[#624AF1] text-white" // 스크린샷의 파란색
             title="템플릿+AI로 일주일에 300, 대학생 월 매출 2,000만 원 대학생"
             tag="지식창업"
@@ -96,7 +94,7 @@ const HomePage = () => {
           <NewFoundaryCard
             href="/stories/24"
             imageUrl={cardImage3} // (1)에서 import한 이미지
-            category="전문직마케팅"
+            category="인플루언서 중개"
             categoryStyle="bg-red-600 text-white" // 스크린샷의 빨간색
             title="대리기사 관두고 인플루언서 공동구매 사업가로 "
             tag="마케팅"

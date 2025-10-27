@@ -24,7 +24,6 @@ const Editor = ({ initialContent, onChange }) => {
 
     if (error) {
       console.error("이미지 업로드 실패:", error);
-      // 사용자에게 에러 알림을 보여주는 로직을 추가할 수 있습니다.
       return ""; // 실패 시 빈 문자열 반환
     }
 

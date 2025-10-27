@@ -1,7 +1,8 @@
 import BlockNoteRenderer from "@/components/BlockNoteRenderer";
 import { createClient } from "@/utils/supabase/server";
-import { Badge, Calendar, Tag } from "lucide-react";
+import { Badge, Calendar, Edit, Tag } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 // TypeScript 타입을 정의합니다.
@@ -12,12 +13,12 @@ type Props = {
 // 페이지 메타데이터를 동적으로 생성합니다.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = createClient();
-  const { id } = params; // params에서 id를 미리 추출합니다.
+  const { id } = await params;
 
   const { data: story } = await supabase
     .from("stories")
     .select("title, tags")
-    .eq("id", id) // 추출한 id를 사용합니다.
+    .eq("id", id)
     .single();
 
   if (!story) {
@@ -34,17 +35,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // 상세 페이지 컴포넌트
 const StoryDetailPage = async ({ params }: Props) => {
   const supabase = createClient();
-  const { id } = params; // params에서 id를 미리 추출합니다.
+  const { id } = params;
 
   const { data: story } = await supabase
     .from("stories")
     .select("*")
-    .eq("id", id) // 추출한 id를 사용합니다.
+    .eq("id", id)
     .single();
 
   if (!story) {
     notFound();
   }
+
+  // 현재 로그인한 사용자 정보 가져오기
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // 관리자 권한 확인
+  const isAdmin = user?.email === "iycjdi0501@gmail.com";
 
   return (
     <div className="bg-gray-100">
@@ -59,6 +68,18 @@ const StoryDetailPage = async ({ params }: Props) => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative pb-16">
         <div className="bg-white rounded-lg shadow-xl p-6 md:p-10">
           <header className="mb-8">
+            {/* 편집 버튼 - 관리자만 보임 */}
+            {isAdmin && (
+              <div className="flex justify-end mb-4">
+                <Link href={`/admin/edit/${story.id}`}>
+                  <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
+                    <Edit size={16} />
+                    편집하기
+                  </button>
+                </Link>
+              </div>
+            )}
+
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
               {story.title}
             </h1>
