@@ -2,7 +2,6 @@ import Header from "@/components/layout/Header";
 import localFont from "next/font/local";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // 👈 Inter로 변경
 import "./globals.css";
 
 // Inter 폰트 정의
@@ -29,7 +28,7 @@ export default function RootLayout({
         className={`${pretendard.className} antialiased w-full bg-gray-100`} // w-full 유지
       >
         <Header></Header>
-        <main className="w-[1200px] h-screen mt-[60px] mx-auto">
+        <main className="w-full sm:w-[1200px] h-screen mt-[70px] mx-auto">
           {children}
         </main>
       </body>

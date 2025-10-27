@@ -56,3 +56,59 @@
     border-top: 1px solid #00ef86 !important;
   }
 }
+
+/* Swiper 커스텀 스타일 */
+.swiper-pagination-bullet {
+  background: #ff7a00;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* 네비게이션 화살표 스타일 */
+.swiper-custom-navigation .swiper-button-next,
+.swiper-custom-navigation .swiper-button-prev {
+  color: #ff7a00;
+  background: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.swiper-custom-navigation .swiper-button-next:after,
+.swiper-custom-navigation .swiper-button-prev:after {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.swiper-custom-navigation .swiper-button-next:hover,
+.swiper-custom-navigation .swiper-button-prev:hover {
+  background: #ff7a00;
+  color: white;
+}
+
+/* 화살표가 슬라이드 밖으로 나가지 않도록 조정 */
+.swiper-custom-navigation .swiper-button-next {
+  right: 10px;
+}
+
+.swiper-custom-navigation .swiper-button-prev {
+  left: 10px;
+}
+
+/* 모바일에서는 화살표 크기 줄이기 */
+@media (max-width: 640px) {
+  .swiper-custom-navigation .swiper-button-next,
+  .swiper-custom-navigation .swiper-button-prev {
+    width: 32px;
+    height: 32px;
+  }
+
+  .swiper-custom-navigation .swiper-button-next:after,
+  .swiper-custom-navigation .swiper-button-prev:after {
+    font-size: 14px;
+  }
+}
