@@ -3,9 +3,9 @@ import Link from "next/link"; // next/link import
 const Card = ({ story }) => {
   return (
     <Link href={`/stories/${story.id}`} className="block">
-      <div className="w-full sm:w-[290px] bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 transform hover:-translate-y-1 transition-transform duration-300">
+      <div className="w-full sm:w-[300px] bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 transform hover:-translate-y-1 transition-transform duration-300">
         {/* 상단 이미지 영역 */}
-        <div className="relative h-[290px] bg-gray-200">
+        <div className="relative h-68 bg-gray-200">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${story.image_url})` }}
@@ -17,11 +17,11 @@ const Card = ({ story }) => {
 
         {/* 하단 텍스트 영역 */}
         <div className="p-5">
-          <p className="text-sm text-gray-500 mb-3">{story.tags.join(", ")}</p>
           <h3 className="text-lg font-bold text-gray-800 line-clamp-2 mb-2">
             {story.title}
           </h3>
-          <div className="flex items-center space-x-2 mb-2">
+          <p className="text-sm text-gray-500 mb-3">{story.tags.join(", ")}</p>
+          <div className="flex items-center space-x-2 mb-4">
             {story.badges.map((badge, index) => (
               <span
                 key={index}
@@ -31,10 +31,8 @@ const Card = ({ story }) => {
               </span>
             ))}
           </div>
-          <div className="w-full flex items-end justify-between">
-            <p className="flex items-baseline text-[22px] font-extrabold text-gray-900">
-              <span className="text-[10px] font-medium mr-1">월</span>
-
+          <div className="flex items-end justify-between">
+            <p className="text-xl font-extrabold text-gray-900">
               {story.metric}
             </p>
           </div>

@@ -12,7 +12,7 @@ type Props = {
 
 // 페이지 메타데이터를 동적으로 생성합니다.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { id } = await params;
 
   const { data: story } = await supabase
@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // 상세 페이지 컴포넌트
 const StoryDetailPage = async ({ params }: Props) => {
-  const supabase = createClient();
-  const { id } = params;
+  const supabase = await createClient();
+  const { id } = await params;
 
   const { data: story } = await supabase
     .from("stories")
