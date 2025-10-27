@@ -4,9 +4,9 @@
 
 import { createClient } from "@/utils/supabase/client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
-export default function AuthCallbackPage() {
+function CallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
@@ -16,7 +16,6 @@ export default function AuthCallbackPage() {
       const code = searchParams.get("code");
 
       if (code) {
-        // Supabase가 자동으로 세션을 처리합니다
         const { error } = await supabase.auth.exchangeCodeForSession(code);
 
         if (error) {
@@ -26,7 +25,6 @@ export default function AuthCallbackPage() {
         }
 
         console.log("로그인 성공!");
-        // 성공 시 홈으로 리다이렉트하고 새로고침
         router.refresh();
         router.push("/");
       }
@@ -42,5 +40,22 @@ export default function AuthCallbackPage() {
         <p className="text-gray-600">로그인 처리중...</p>
       </div>
     </div>
+  );
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+            <p className="text-gray-600">로딩중...</p>
+          </div>
+        </div>
+      }
+    >
+      <CallbackContent />
+    </Suspense>
   );
 }
