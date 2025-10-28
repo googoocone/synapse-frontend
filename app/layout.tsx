@@ -1,6 +1,7 @@
 import Header from "@/components/layout/Header";
 import localFont from "next/font/local";
 
+import Footer from "@/components/layout/Footer";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -20,17 +21,18 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.NodeNode;
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} bg-gray-100`}>
       <body
-        className={`${pretendard.className} antialiased w-full bg-gray-100`} // w-full 유지
+        className={`${pretendard.className} antialiased min-h-screen flex flex-col bg-gray-100`}
       >
-        <Header></Header>
-        <main className="w-full sm:w-[1200px] h-screen mt-[70px] mx-auto">
+        <Header />
+        <main className="w-full sm:w-[1200px] flex-1 mt-[70px] mx-auto">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
