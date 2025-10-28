@@ -44,13 +44,13 @@ const HomePage = () => {
 
   const newFoundaryCards = [
     {
-      href: "/stories/23",
+      href: "/stories/33",
       imageUrl: cardImage1,
       category: "아마존 구매대행",
       categoryStyle: "bg-yellow-400 text-black",
-      title: "퇴사 2주 만에 월 1,000만원, 아마존 구매대행",
+      title: "반영구샵+구매대행 병행, 월 매출 1억 2천→순수익 4천만 원",
       tag: "구매대행",
-      amount: "1,000만원",
+      amount: "4,000만원",
     },
     {
       href: "/stories/26",
