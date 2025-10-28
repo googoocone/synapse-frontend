@@ -8,9 +8,10 @@ const categories = [
   "온라인 쇼핑몰",
   "대행 서비스",
   "콘텐츠 제작",
-  "지식 창업",
+  "전문지식창업",
   "오프라인 소매",
   "임대업",
+  "중개업",
 ];
 
 interface CategoryFilterProps {

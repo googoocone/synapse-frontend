@@ -87,7 +87,7 @@ const HomePage = () => {
             이미 성공한 "1인 창업가"들의 노하우를 구독하세요
           </div>
           <Link href="/login">
-            <button className="mt-6 md:mt-8 w-full max-w-[380px] h-12 md:h-[50px] bg-black/90 text-white font-semibold rounded-md cursor-pointer hover:bg-black transition-colors text-xs px-2 sm:text-sm md:text-base">
+            <button className="mt-6 px-2 sm:px-12 md:mt-8 w-full max-w-[380px] h-12 md:h-[50px] bg-black/90 text-white font-semibold rounded-md cursor-pointer hover:bg-black transition-colors text-xs  sm:text-sm md:text-base">
               Foundary 가입하기
             </button>
           </Link>

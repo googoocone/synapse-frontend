@@ -47,13 +47,12 @@ const StoryDetailPage = async ({ params }: Props) => {
     notFound();
   }
 
-  // 현재 로그인한 사용자 정보 가져오기
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // 관리자 권한 확인
   const isAdmin = user?.email === "iycjdi0501@gmail.com";
+  const isLoggedIn = !!user;
 
   return (
     <div className="bg-gray-100">
@@ -68,7 +67,6 @@ const StoryDetailPage = async ({ params }: Props) => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative pb-16">
         <div className="bg-white rounded-lg shadow-xl p-6 md:p-10">
           <header className="mb-8">
-            {/* 편집 버튼 - 관리자만 보임 */}
             {isAdmin && (
               <div className="flex justify-end mb-4">
                 <Link href={`/admin/edit/${story.id}`}>
@@ -80,7 +78,7 @@ const StoryDetailPage = async ({ params }: Props) => {
               </div>
             )}
 
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-4">
               {story.title}
             </h1>
             <div className="flex flex-wrap items-center text-sm text-gray-500 gap-x-4 gap-y-2">
@@ -104,9 +102,12 @@ const StoryDetailPage = async ({ params }: Props) => {
             </div>
           </header>
 
+          {/* 콘텐츠 - 로그인 여부에 따라 blur 처리 */}
+          {/* <ContentBlur isLoggedIn={isLoggedIn}> */}
           <article className="prose prose-lg max-w-none">
             <BlockNoteRenderer content={story.content} />
           </article>
+          {/* </ContentBlur> */}
         </div>
       </div>
     </div>
