@@ -6,9 +6,9 @@ import NewFoundaryCard from "@/components/home/NewFoundarySection/NewFoundaryCar
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
-import cardImage1 from "@/assets/profile23.png";
-import cardImage3 from "@/assets/profile24.png";
 import cardImage2 from "@/assets/profile26.png";
+import cardImage1 from "@/assets/profile33.png";
+import cardImage3 from "@/assets/profile38.png";
 
 // Swiper import
 import Link from "next/link";
@@ -62,13 +62,13 @@ const HomePage = () => {
       amount: "2,000만원",
     },
     {
-      href: "/stories/24",
+      href: "/stories/38",
       imageUrl: cardImage3,
-      category: "인플루언서 중개",
+      category: "쿠팡 로켓그로스",
       categoryStyle: "bg-red-600 text-white",
-      title: "대리기사 관두고 인플루언서 공동구매 사업가로 ",
-      tag: "마케팅",
-      amount: "2,000만원",
+      title: "쿠팡이 배송·CS 다 해줘요 로켓그로스로 월 매출 1억 잔망킹",
+      tag: "이커머스",
+      amount: "1억원",
     },
   ];
 
