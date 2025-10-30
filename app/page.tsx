@@ -73,7 +73,7 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full mx-auto max-w-[1200px] px-4">
       {/* --- 상단 섹션 --- */}
       <section className="flex flex-col lg:flex-row lg:justify-between gap-8 items-center mb-8 md:mb-12 rounded-md bg-white">
         <div className="w-full flex flex-col items-center justify-center py-6 md:py-8 lg:py-10 px-4">
@@ -101,29 +101,38 @@ const HomePage = () => {
         </h2>
 
         {/* 모바일/태블릿: Swiper */}
-        <div className="block lg:hidden relative px-2">
-          <div className="max-w-md mx-auto sm:max-w-2xl">
-            <Swiper
-              modules={[Pagination, Autoplay]}
-              spaceBetween={24}
-              slidesPerView={1.1}
-              pagination={{ clickable: true }}
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 16,
-                },
-              }}
-              className="pb-12"
-            >
-              {newFoundaryCards.map((card, index) => (
-                <SwiperSlide key={index}>
-                  <NewFoundaryCard {...card} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+        <div className="block lg:hidden">
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            spaceBetween={16}
+            slidesPerView={1}
+            centeredSlides={false}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 16,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+            }}
+            className="pb-12 new-foundary-swiper"
+          >
+            {newFoundaryCards.map((card, index) => (
+              <SwiperSlide key={index}>
+                <NewFoundaryCard {...card} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
 
         {/* 데스크톱: Grid */}
@@ -135,7 +144,7 @@ const HomePage = () => {
       </section>
 
       {/* --- 콘텐츠 섹션 --- */}
-      <main className="my-8 md:my-12 px-2">
+      <main className="my-8 md:my-12">
         <h2 className="text-xl md:text-2xl font-bold flex gap-2 text-gray-900 mb-4 md:mb-6 justify-center">
           <p className="text-[#FF7A00]">Foundary</p> Story
         </h2>
@@ -153,6 +162,26 @@ const HomePage = () => {
           )}
         </div>
       </main>
+
+      {/* Swiper 커스텀 스타일 */}
+      <style jsx global>{`
+        .new-foundary-swiper .swiper-pagination {
+          text-align: center !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: auto !important;
+        }
+
+        .new-foundary-swiper .swiper-pagination-bullet {
+          background-color: #ff7a00 !important;
+          opacity: 0.3 !important;
+        }
+
+        .new-foundary-swiper .swiper-pagination-bullet-active {
+          background-color: #ff7a00 !important;
+          opacity: 1 !important;
+        }
+      `}</style>
     </div>
   );
 };

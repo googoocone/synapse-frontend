@@ -59,60 +59,38 @@ export default function HeaderMenu() {
       {/* 모바일: 오버레이 */}
       {isOpen && isMobile && (
         <div
-          className="fixed inset-0 bg-black/50 z-40"
+          className="fixed inset-0 bg-black/50 z-40 top-[50px] md:top-[60px]"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* 모바일: 사이드 메뉴 */}
+      {/* 모바일: 드롭다운 메뉴 (헤더 아래) */}
       {isMobile ? (
         <div
-          className={`fixed top-0 left-0 h-full w-[280px] bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
+          className={`fixed left-0 right-0 top-[50px] bg-[#FF7A00] shadow-xl z-50 overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="flex flex-col h-full">
-            {/* 메뉴 헤더 */}
-            <div className="flex items-center justify-between p-6 border-b">
-              <h2 className="text-xl font-bold text-gray-800">메뉴</h2>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-gray-500 hover:text-gray-700 text-2xl"
-                aria-label="메뉴 닫기"
-              >
-                ×
-              </button>
-            </div>
-
-            {/* 메뉴 아이템 */}
-            <nav className="flex-1 p-4">
-              <ul className="space-y-2">
-                {menuItems.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-[#FF7A00] hover:text-white transition-colors font-medium"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* 메뉴 푸터 */}
-            <div className="p-6 border-t">
-              <p className="text-sm text-gray-500 text-center">
-                © 2025 Foundary
-              </p>
-            </div>
-          </div>
+          <nav className="py-4 px-4">
+            <ul className="space-y-2">
+              {menuItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block px-4 py-3 rounded-lg text-white font-medium hover:bg-black/10 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       ) : (
         /* 데스크탑: 드롭다운 메뉴 */
         isOpen && (
-          <div className="absolute top-full left-0 mt-2 w-[220px] bg-[#FF7A00] rounded-lg shadow-xl z-50 py-2 ">
+          <div className="absolute top-full left-0 mt-2 w-[220px] bg-[#FF7A00] rounded-lg shadow-xl z-50 py-2">
             <nav>
               <ul className="space-y-1">
                 {menuItems.map((item) => (
@@ -120,7 +98,7 @@ export default function HeaderMenu() {
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-white    transition-colors font-medium"
+                      className="block px-4 py-3 text-white hover:bg-black/10 transition-colors font-medium"
                     >
                       {item.label}
                     </Link>
