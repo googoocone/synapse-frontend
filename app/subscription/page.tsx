@@ -1,8 +1,8 @@
 // app/subscription/page.tsx
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function SubscriptionPage() {
   const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">(
@@ -10,16 +10,13 @@ export default function SubscriptionPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white rounded-md py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* 헤더 */}
         <div className="text-center mb-8 md:mb-12">
           <div className="inline-flex items-center gap-4 mb-6">
             <button className="text-purple-600 font-bold text-lg border-b-2 border-purple-600 pb-2">
-              1인 멤버십
-            </button>
-            <button className="text-gray-400 font-medium text-lg pb-2">
-              2인 / 4인 멤버십
+              Foundary 멤버십
             </button>
           </div>
 
@@ -27,42 +24,13 @@ export default function SubscriptionPage() {
             <div className="flex items-start gap-4">
               <div className="flex-1">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                  모든 학습을
+                  모든 성공 공식 컨텐츠를
                   <br />
                   무제한으로 즐겨보세요!
                 </h1>
                 <p className="text-gray-500 text-sm md:text-base">
                   일주일 무료체험 후의 요금제를 선택하세요.
                 </p>
-              </div>
-              <div className="flex-shrink-0">
-                <svg
-                  width="100"
-                  height="80"
-                  viewBox="0 0 100 80"
-                  fill="none"
-                  className="w-20 h-16 md:w-24 md:h-20"
-                >
-                  <path
-                    d="M20 40C20 40 35 20 50 40C65 60 80 40 80 40"
-                    stroke="url(#gradient)"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    fill="none"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="gradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="0%"
-                    >
-                      <stop offset="0%" stopColor="#A78BFA" />
-                      <stop offset="100%" stopColor="#7C3AED" />
-                    </linearGradient>
-                  </defs>
-                </svg>
               </div>
             </div>
           </div>
@@ -79,7 +47,7 @@ export default function SubscriptionPage() {
             onClick={() => setSelectedPlan("yearly")}
             className={`relative bg-white rounded-2xl p-6 cursor-pointer transition-all ${
               selectedPlan === "yearly"
-                ? "border-2 border-purple-500 shadow-lg"
+                ? "border-2 border-orange-500 shadow-lg"
                 : "border-2 border-gray-200"
             }`}
           >
@@ -115,7 +83,7 @@ export default function SubscriptionPage() {
             onClick={() => setSelectedPlan("monthly")}
             className={`bg-white rounded-2xl p-6 cursor-pointer transition-all ${
               selectedPlan === "monthly"
-                ? "border-2 border-purple-500 shadow-lg"
+                ? "border-2 border-orange-500 shadow-lg"
                 : "border-2 border-gray-200"
             }`}
           >
@@ -136,7 +104,7 @@ export default function SubscriptionPage() {
         </div>
 
         {/* 구독 버튼 */}
-        <button className="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg md:text-xl font-bold py-4 md:py-5 rounded-2xl transition-colors mb-6">
+        <button className="w-full bg-orange-600 hover:bg-orange-700 text-white text-lg md:text-xl font-bold py-4 md:py-5 rounded-2xl transition-colors mb-6">
           일주일간 무료 체험 시작하기
         </button>
 

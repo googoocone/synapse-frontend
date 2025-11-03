@@ -1,13 +1,10 @@
 // components/Header.tsx
 
-import logoImage from "@/assets/logo.png";
+import HeaderMenu from "@/components/layout/HeaderMenu";
 import LogoutButton from "@/components/ui/LogoutButton";
-import Menu from "@/assets/menu.png";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import Image from "next/image";
 import Link from "next/link";
-import HeaderMenu from "@/components/layout/HeaderMenu";
 
 export default async function Header() {
   const cookieStore = await cookies();
@@ -42,12 +39,17 @@ export default async function Header() {
       <div className="flex items-center justify-end gap-2 sm:gap-3 text-xs sm:text-sm">
         {user ? (
           <>
+            <Link href="/subscription" className="hidden md:block">
+              <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-black text-white hover:bg-[#214061]/80 hover:text-white font-semibold transition-colors cursor-pointer whitespace-nowrap">
+                구독하기
+              </button>
+            </Link>
             <LogoutButton />
           </>
         ) : (
           <>
             {/* 구독하기 버튼 - 데스크탑에서만 보임 */}
-            <Link href="/login" className="hidden md:block">
+            <Link href="/subscription" className="hidden md:block">
               <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-black text-white hover:bg-[#214061]/80 hover:text-white font-semibold transition-colors cursor-pointer whitespace-nowrap">
                 구독하기
               </button>
