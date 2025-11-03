@@ -1,5 +1,4 @@
 // app/auth/callback/page.tsx
-
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
@@ -25,7 +24,10 @@ function CallbackContent() {
         }
 
         console.log("로그인 성공!");
-        router.refresh();
+
+        // revalidate를 위한 API 호출
+        await fetch("/api/auth/revalidate", { method: "POST" });
+
         router.push("/");
       }
     };
