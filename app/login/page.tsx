@@ -50,8 +50,8 @@ export default function LoginPage() {
       alert("로그인 정보가 올바르지 않습니다.");
       return;
     }
-    router.push("/");
     router.refresh();
+    router.push("/");
   };
 
   const handleOAuthSignIn = async (provider: Provider) => {
