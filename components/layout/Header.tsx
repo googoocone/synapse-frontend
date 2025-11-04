@@ -55,7 +55,7 @@ export default async function Header() {
         ) : (
           <>
             {/* 구독하기 버튼 - 데스크탑에서만 보임 */}
-            <Link href="/subscription" className="hidden md:block">
+            <Link href="/subscription" className=" md:block">
               <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-black text-white hover:bg-[#214061]/80 hover:text-white font-semibold transition-colors cursor-pointer whitespace-nowrap">
                 구독하기
               </button>

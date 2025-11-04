@@ -116,14 +116,9 @@ const HomePage = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
-              640: {
-                slidesPerView: 1,
-                spaceBetween: 16,
-              },
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
+              320: { slidesPerView: 1, spaceBetween: 12 }, // 작은 폰
+              640: { slidesPerView: 1.2, spaceBetween: 16 }, // 중간 폰 (살짝 다음 슬라이드 보임)
+              768: { slidesPerView: 2, spaceBetween: 20 },
             }}
             className="pb-12 new-foundary-swiper"
           >

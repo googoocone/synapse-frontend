@@ -146,6 +146,15 @@ export default function LoginPage() {
           </div>
 
           <div className="space-y-3">
+            <Link href="/signup">
+              <button
+                type="submit"
+                disabled={isLoading || oauthLoading !== null}
+                className="w-full py-3.5 bg-white text-[#FF7A00] border-1 font-semibold rounded-full hover:bg-[#FF7A00] hover:text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                회원가입
+              </button>
+            </Link>
             {/* <button
               onClick={() => handleOAuthSignIn("kakao")}
               disabled={isLoading || oauthLoading !== null}
@@ -163,7 +172,7 @@ export default function LoginPage() {
                 </>
               )}
             </button> */}
-            <button
+            {/* <button
               onClick={() => handleOAuthSignIn("google")}
               disabled={isLoading || oauthLoading !== null}
               className="w-full py-3.5 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-full flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
@@ -179,7 +188,7 @@ export default function LoginPage() {
                   구글로 로그인
                 </>
               )}
-            </button>
+            </button> */}
           </div>
 
           <div className="text-center mt-8">
