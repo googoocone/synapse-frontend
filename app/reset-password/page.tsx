@@ -8,6 +8,7 @@ export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(true);
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
@@ -16,32 +17,13 @@ export default function ResetPasswordPage() {
   const supabase = createClientComponentClient();
 
   useEffect(() => {
-    // Exchange the code from URL for a session
-    const hashParams = new URLSearchParams(window.location.search);
-    const code = hashParams.get("code");
+    // Just wait a moment to let auth settle, then stop verifying
+    const timer = setTimeout(() => {
+      setIsVerifying(false);
+    }, 1000);
 
-    if (code) {
-      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-        if (error) {
-          setMessage({
-            type: "error",
-            text: "유효하지 않거나 만료된 링크입니다. 비밀번호 재설정을 다시 요청해주세요.",
-          });
-        }
-      });
-    }
-
-    // Listen for auth state changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        // User is ready to reset password
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [supabase]);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,6 +73,18 @@ export default function ResetPasswordPage() {
       setLoading(false);
     }
   };
+
+  // Loading spinner while verifying
+  if (isVerifying) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <p className="mt-4 text-gray-600">준비 중...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -159,11 +153,28 @@ export default function ResetPasswordPage() {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
+              {loading && (
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <div className="h-5 w-5 border-t-2 border-b-2 border-white rounded-full animate-spin"></div>
+                </span>
+              )}
               {loading ? "변경 중..." : "비밀번호 변경"}
             </button>
           </div>
         </form>
       </div>
+
+      {/* Full screen loading overlay */}
+      {loading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 flex flex-col items-center shadow-xl">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            <p className="mt-4 text-gray-700 font-medium">
+              비밀번호 변경 중...
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
