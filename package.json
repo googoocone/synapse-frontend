@@ -15,6 +15,7 @@
     "@google/generative-ai": "^0.24.1",
     "@langchain/google-genai": "^0.2.18",
     "@mantine/core": "^8.3.5",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.75.0",
     "langchain": "^0.3.36",

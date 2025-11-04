@@ -101,7 +101,7 @@ export default function LoginPage() {
             Sign Up
           </Link>
           <Link href="/forgot-password">Forgot Password</Link>
-          <Link href="/contact">Contact Us</Link>
+          <Link href="/inquiry">Contact Us</Link>
         </div>
 
         <div className="relative my-6">
