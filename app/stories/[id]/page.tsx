@@ -51,7 +51,7 @@ const StoryDetailPage = async ({ params }: Props) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAdmin = user?.email === "iycjdi0501@gmail.com";
+  const isAdmin = user?.email === "snu910501@naver.com";
   const isLoggedIn = !!user;
 
   return (
