@@ -1,10 +1,10 @@
 // components/HeaderMenu.tsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import Menu from "@/assets/menu.png";
 import Image from "next/image";
 import Link from "next/link";
-import Menu from "@/assets/menu.png";
+import { useEffect, useRef, useState } from "react";
 
 export default function HeaderMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function HeaderMenu() {
   const menuItems = [
     { label: "홈", href: "/" },
     { label: "Foundary 구독", href: "/subscription" },
-    { label: "고객센터", href: "/support" },
+    // { label: "고객센터", href: "/support" },
     { label: "1:1문의", href: "/inquiry" },
   ];
 

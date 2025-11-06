@@ -1,13 +1,13 @@
 // components/Header.tsx
 
-import logoImage from "@/assets/logo.png";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+import HeaderMenu from "@/components/layout/HeaderMenu";
 import LogoutButton from "@/components/ui/LogoutButton";
-import Menu from "@/assets/menu.png";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import Image from "next/image";
 import Link from "next/link";
-import HeaderMenu from "@/components/layout/HeaderMenu";
 
 export default async function Header() {
   const cookieStore = await cookies();
@@ -16,6 +16,9 @@ export default async function Header() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  console.log("[Header] User:", user?.email || "Not logged in");
+  console.log("[Header] User ID:", user?.id || "No ID");
 
   return (
     <header className="fixed top-0 left-0 right-0 mx-auto z-20 w-full max-w-[1200px] h-[50px] md:h-[60px] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#FF7A00] rounded-none md:rounded-md">
@@ -42,12 +45,17 @@ export default async function Header() {
       <div className="flex items-center justify-end gap-2 sm:gap-3 text-xs sm:text-sm">
         {user ? (
           <>
+            <Link href="/subscription" className="hidden md:block">
+              <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-black text-white hover:bg-[#214061]/80 hover:text-white font-semibold transition-colors cursor-pointer whitespace-nowrap">
+                구독하기
+              </button>
+            </Link>
             <LogoutButton />
           </>
         ) : (
           <>
             {/* 구독하기 버튼 - 데스크탑에서만 보임 */}
-            <Link href="/login" className="hidden md:block">
+            <Link href="/subscription" className=" md:block">
               <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-black text-white hover:bg-[#214061]/80 hover:text-white font-semibold transition-colors cursor-pointer whitespace-nowrap">
                 구독하기
               </button>
