@@ -29,7 +29,7 @@ export default function SubscriptionPage() {
                   무제한으로 즐겨보세요!
                 </h1>
                 <p className="text-gray-500 text-sm md:text-base">
-                  일주일 무료체험 후의 요금제를 선택하세요.
+                  with. Foundary
                 </p>
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function SubscriptionPage() {
 
         {/* 구독 버튼 */}
         <button className="w-full bg-orange-600 hover:bg-orange-700 text-white text-lg md:text-xl font-bold py-4 md:py-5 rounded-2xl transition-colors mb-6">
-          일주일간 무료 체험 시작하기
+          Foundary 시작하기
         </button>
 
         {/* 안내 문구 */}
