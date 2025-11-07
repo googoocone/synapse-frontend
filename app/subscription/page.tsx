@@ -2,12 +2,57 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 
 export default function SubscriptionPage() {
+  const router = useRouter();
   const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">(
     "yearly"
   );
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        // 로그인 안 되어 있으면 로그인 페이지로
+
+        router.push("/login");
+        return;
+      }
+
+      setUser(user);
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, [router]);
+
+  // 로딩 중이면 스피너 표시
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-orange-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">로딩 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const handleSubscribe = () => {
+    // 선택한 플랜에 따라 checkout 페이지로 이동
+    const planId =
+      selectedPlan === "yearly" ? "yearly_plan_id" : "monthly_plan_id";
+    router.push(`/subscription/checkout?plan=${selectedPlan}`);
+  };
 
   return (
     <div className="min-h-screen bg-white rounded-md py-8 px-4 sm:px-6 lg:px-8">
@@ -104,7 +149,10 @@ export default function SubscriptionPage() {
         </div>
 
         {/* 구독 버튼 */}
-        <button className="w-full bg-orange-600 hover:bg-orange-700 text-white text-lg md:text-xl font-bold py-4 md:py-5 rounded-2xl transition-colors mb-6">
+        <button
+          onClick={handleSubscribe}
+          className="w-full bg-orange-600 hover:bg-orange-700 text-white text-lg md:text-xl font-bold py-4 md:py-5 rounded-2xl transition-colors mb-6"
+        >
           Foundary 시작하기
         </button>
 
