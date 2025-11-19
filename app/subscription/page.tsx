@@ -1,4 +1,3 @@
-// app/subscription/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -22,8 +21,6 @@ export default function SubscriptionPage() {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        // 로그인 안 되어 있으면 로그인 페이지로
-
         router.push("/login");
         return;
       }
@@ -35,7 +32,6 @@ export default function SubscriptionPage() {
     checkAuth();
   }, [router]);
 
-  // 로딩 중이면 스피너 표시
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -48,7 +44,6 @@ export default function SubscriptionPage() {
   }
 
   const handleSubscribe = () => {
-    // 선택한 플랜에 따라 checkout 페이지로 이동
     const planId =
       selectedPlan === "yearly" ? "yearly_plan_id" : "monthly_plan_id";
     router.push(`/subscription/checkout?plan=${selectedPlan}`);
@@ -71,13 +66,30 @@ export default function SubscriptionPage() {
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                   모든 성공 공식 컨텐츠를
                   <br />
-                  무제한으로 즐겨보세요!
+                  <span className="text-orange-600">1개월간 무료</span>로
+                  확인하세요!
                 </h1>
                 <p className="text-gray-500 text-sm md:text-base">
                   with. Foundary
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* 무료 체험 안내 배너 */}
+          <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-200 rounded-2xl p-4 md:p-6 max-w-2xl mx-auto mb-8">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <span className="text-2xl">🎁</span>
+              <h3 className="text-lg md:text-xl font-bold text-gray-900">
+                첫 1개월 무료 체험
+              </h3>
+            </div>
+            <p className="text-sm md:text-base text-gray-600 text-center">
+              지금 가입하면 30일간 무료로 모든 콘텐츠를 이용할 수 있어요
+            </p>
+            <p className="text-xs text-gray-500 text-center mt-2">
+              무료 기간 종료 3일 전 알림 • 언제든지 해지 가능
+            </p>
           </div>
         </div>
 
@@ -96,20 +108,24 @@ export default function SubscriptionPage() {
                 : "border-2 border-gray-200"
             }`}
           >
-            <div className="absolute top-4 left-4 flex gap-2">
+            <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
               <span className="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">
                 인기
               </span>
               <span className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                 58% 할인
               </span>
+              <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                🎁 1개월 무료
+              </span>
             </div>
 
-            <div className="flex items-center justify-between mt-8">
+            <div className="flex items-center justify-between mt-12">
               <div>
                 <p className="text-3xl md:text-4xl font-bold text-gray-900">
                   12개월
                 </p>
+                <p className="text-sm text-gray-500 mt-1">+ 1개월 무료 체험</p>
               </div>
               <div className="text-right">
                 <p className="text-gray-400 line-through text-sm md:text-base">
@@ -118,7 +134,9 @@ export default function SubscriptionPage() {
                 <p className="text-3xl md:text-4xl font-bold text-gray-900">
                   ₩98,000
                 </p>
-                <p className="text-gray-500 text-sm md:text-base">₩8,167/월</p>
+                <p className="text-gray-500 text-sm md:text-base">
+                  무료 체험 후 ₩8,167/월
+                </p>
               </div>
             </div>
           </div>
@@ -126,23 +144,31 @@ export default function SubscriptionPage() {
           {/* 1개월 플랜 */}
           <div
             onClick={() => setSelectedPlan("monthly")}
-            className={`bg-white rounded-2xl p-6 cursor-pointer transition-all ${
+            className={`relative bg-white rounded-2xl p-6 cursor-pointer transition-all ${
               selectedPlan === "monthly"
                 ? "border-2 border-orange-500 shadow-lg"
                 : "border-2 border-gray-200"
             }`}
           >
-            <div className="flex items-center justify-between">
+            <div className="absolute top-4 left-4">
+              <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                🎁 1개월 무료
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between mt-8">
               <div>
                 <p className="text-3xl md:text-4xl font-bold text-gray-400">
                   1개월
                 </p>
+                <p className="text-sm text-gray-500 mt-1">+ 1개월 무료 체험</p>
               </div>
               <div className="text-right">
                 <p className="text-3xl md:text-4xl font-bold text-gray-400">
                   ₩19,500
                   <span className="text-base md:text-lg">/월</span>
                 </p>
+                <p className="text-gray-500 text-sm">무료 체험 후 결제</p>
               </div>
             </div>
           </div>
@@ -153,10 +179,21 @@ export default function SubscriptionPage() {
           onClick={handleSubscribe}
           className="w-full bg-orange-600 hover:bg-orange-700 text-white text-lg md:text-xl font-bold py-4 md:py-5 rounded-2xl transition-colors mb-6"
         >
-          Foundary 시작하기
+          1개월 무료 체험 시작하기
         </button>
 
         {/* 안내 문구 */}
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+          <p className="text-center text-gray-700 text-sm">
+            <span className="font-bold">💡 무료 체험 안내</span>
+            <br />
+            30일 무료 체험 후 자동 결제됩니다.
+            <br />
+            무료 기간 중 언제든지 해지 가능하며, 해지 시 요금이 청구되지
+            않습니다.
+          </p>
+        </div>
+
         <p className="text-center text-gray-500 text-sm mb-8">
           애플 앱스토어에서 언제든지 취소할 수 있어요.
         </p>
@@ -182,6 +219,10 @@ export default function SubscriptionPage() {
             환불 정책
           </h3>
           <div className="space-y-3 text-sm md:text-base text-gray-700 leading-relaxed">
+            <p>
+              • 무료 체험 기간 중에는 언제든지 해지할 수 있으며, 요금이 청구되지
+              않습니다.
+            </p>
             <p>• 결제 후 3일 이내에는 무조건 환불이 가능합니다.</p>
             <p>
               • 환불을 원하시면 고객센터(카카오톡 채널)로 연락주세요. 최대한

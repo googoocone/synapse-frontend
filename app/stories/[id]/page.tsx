@@ -1,16 +1,15 @@
-import BlockNoteRenderer from "@/components/BlockNoteRenderer";
+import StoryDetailTabs from "./StoryDetailTabs"; // ✅ 새로 추가
+
 import { createClient } from "@/utils/supabase/server";
 import { Badge, Calendar, Edit, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-// TypeScript 타입을 정의합니다.
 type Props = {
   params: { id: string };
 };
 
-// 페이지 메타데이터를 동적으로 생성합니다.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = await createClient();
   const { id } = await params;
@@ -32,7 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// 상세 페이지 컴포넌트
 const StoryDetailPage = async ({ params }: Props) => {
   const supabase = await createClient();
   const { id } = await params;
@@ -56,6 +54,7 @@ const StoryDetailPage = async ({ params }: Props) => {
 
   return (
     <div className="bg-gray-100">
+      {/* 상단 히어로 이미지 */}
       <div className="relative w-full h-64 md:h-96 bg-gray-200">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -81,6 +80,7 @@ const StoryDetailPage = async ({ params }: Props) => {
             <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-4">
               {story.title}
             </h1>
+
             <div className="flex flex-wrap items-center text-sm text-gray-500 gap-x-4 gap-y-2">
               <div className="flex items-center">
                 <Calendar size={14} className="mr-1.5" />
@@ -95,6 +95,7 @@ const StoryDetailPage = async ({ params }: Props) => {
                 <span>{story.badges?.join(", ")}</span>
               </div>
             </div>
+
             <div className="mt-6 border-t pt-6">
               <p className="text-lg font-bold text-gray-800">
                 핵심 성과: <span className="text-blue-600">{story.metric}</span>
@@ -102,12 +103,14 @@ const StoryDetailPage = async ({ params }: Props) => {
             </div>
           </header>
 
-          {/* 콘텐츠 - 로그인 여부에 따라 blur 처리 */}
-          {/* <ContentBlur isLoggedIn={isLoggedIn}> */}
-          <article className="prose prose-lg max-w-none">
-            <BlockNoteRenderer content={story.content} />
+          {/* 👇 여기부터 탭 영역 */}
+          <article className="max-w-none">
+            <StoryDetailTabs
+              interviewContent={story.interview_content}
+              guideContent={story.guide_content}
+              isLoggedIn={isLoggedIn}
+            />
           </article>
-          {/* </ContentBlur> */}
         </div>
       </div>
     </div>
