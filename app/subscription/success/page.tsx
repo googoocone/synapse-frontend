@@ -1,119 +1,112 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { CheckCircle, ArrowRight, Home } from "lucide-react";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default function SubscriptionSuccessPage() {
-  const router = useRouter();
+// 실제 컴포넌트 (useSearchParams 사용)
+function SuccessContent() {
   const searchParams = useSearchParams();
-  const [countdown, setCountdown] = useState(5);
-
-  // URL에서 파라미터 가져오기
+  const router = useRouter();
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
-  const planName = searchParams.get("planName");
+  const customerName = searchParams.get("customerName");
 
   useEffect(() => {
-    // 5초 후 홈으로 자동 이동
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          router.push("/");
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [router]);
+    // 결제 성공 후 서버에 결제 정보 저장 등의 처리
+    // TODO: API 호출
+  }, [orderId]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        {/* 성공 아이콘 */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-6">
-            <CheckCircle className="w-16 h-16 text-green-600" />
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center">
+        <div className="mb-6">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="w-8 h-8 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            구독이 완료되었습니다! 🎉
-          </h1>
-          <p className="text-gray-600">
-            Foundary 멤버십에 오신 것을 환영합니다
-          </p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">결제 완료!</h1>
+          <p className="text-gray-600 mb-4">Foundary 멤버십에 가입되었습니다</p>
         </div>
 
-        {/* 구독 정보 카드 */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <h2 className="font-semibold text-gray-900 mb-4">구독 정보</h2>
-
-          <div className="space-y-3">
-            {planName && (
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">플랜</span>
-                <span className="font-semibold text-gray-900">{planName}</span>
-              </div>
-            )}
-
-            {amount && (
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">결제 금액</span>
-                <span className="font-semibold text-gray-900">
-                  {parseInt(amount).toLocaleString()}원
-                </span>
-              </div>
-            )}
-
-            {orderId && (
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-500">주문번호</span>
-                <span className="text-gray-700 font-mono">{orderId}</span>
-              </div>
-            )}
-          </div>
-
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-600">
-              다음 결제일에 자동으로 결제됩니다.
-            </p>
-          </div>
+        <div className="bg-gray-50 rounded-lg p-4 mb-6 space-y-2">
+          {customerName && (
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">구매자</span>
+              <span className="font-medium">{customerName}</span>
+            </div>
+          )}
+          {amount && (
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">결제 금액</span>
+              <span className="font-bold text-orange-600">
+                ₩{Number(amount).toLocaleString()}
+              </span>
+            </div>
+          )}
+          {orderId && (
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">주문 번호</span>
+              <span className="font-mono text-xs">{orderId}</span>
+            </div>
+          )}
         </div>
 
-        {/* 안내 메시지 */}
-        <div className="bg-blue-50 rounded-xl p-4 mb-6">
-          <p className="text-sm text-blue-800">
-            💡 <strong>알림:</strong> 구독 관리는 마이페이지에서 할 수 있습니다.
-            언제든지 구독을 해지하거나 플랜을 변경할 수 있어요.
-          </p>
-        </div>
-
-        {/* 버튼 그룹 */}
         <div className="space-y-3">
-          <button
-            onClick={() => router.push("/")}
-            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+          <Link
+            href="/"
+            className="block w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition-colors"
           >
-            <Home className="w-5 h-5" />
             홈으로 가기
-          </button>
-
-          <button
-            onClick={() => router.push("/mypage")}
-            className="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3 rounded-xl border-2 border-gray-200 transition-colors flex items-center justify-center gap-2"
+          </Link>
+          <Link
+            href="/my-account"
+            className="block w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-lg transition-colors"
           >
-            마이페이지로 이동
-            <ArrowRight className="w-5 h-5" />
-          </button>
+            내 계정 보기
+          </Link>
         </div>
 
-        {/* 자동 이동 카운트다운 */}
-        <p className="text-center text-sm text-gray-500 mt-6">
-          {countdown}초 후 자동으로 홈으로 이동합니다
-        </p>
+        <div className="mt-6 pt-6 border-t border-gray-200">
+          <p className="text-sm text-gray-600">
+            🎁 1개월 무료 체험이 시작되었습니다
+          </p>
+          <p className="text-xs text-gray-500 mt-2">
+            무료 기간 종료 3일 전에 알려드릴게요
+          </p>
+        </div>
       </div>
     </div>
+  );
+}
+
+// 메인 컴포넌트 (Suspense로 감싸기)
+export default function SuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-orange-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">결제 확인 중...</p>
+          </div>
+        </div>
+      }
+    >
+      <SuccessContent />
+    </Suspense>
   );
 }
