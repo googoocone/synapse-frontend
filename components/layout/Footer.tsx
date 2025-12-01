@@ -14,6 +14,9 @@ const Footer = () => {
             <p>
               <span className="font-medium">상호명:</span> 뉴씽크
             </p>
+                        <p>
+              <span className="font-medium">대표자 명:</span> 박영호
+            </p>
             <p>
               <span className="font-medium">주소:</span> 경기도 화성시 산척동
               745 반도유보라 아이비파크 10.2차 3618동 1202호
