@@ -1,11 +1,11 @@
 "use client";
 
+import ImageUpload from "@/components/admin/ImageUpload";
 import { createClient } from "@/utils/supabase/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-// Editor 컴포넌트를 Dynamic Import로 불러옵니다.
 const Editor = dynamic(() => import("@/components/admin/Editor"), {
   ssr: false,
   loading: () => (
@@ -21,11 +21,11 @@ const WritePage = () => {
 
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [founderImageUrl, setFounderImageUrl] = useState("");
   const [tags, setTags] = useState("");
   const [badges, setBadges] = useState("");
   const [metric, setMetric] = useState("");
 
-  // 두 개의 에디터 상태 관리
   const [interviewContent, setInterviewContent] = useState<any>(null);
   const [guideContent, setGuideContent] = useState<any>(null);
 
@@ -44,12 +44,12 @@ const WritePage = () => {
     const storyData = {
       title,
       image_url: imageUrl,
+      founder_image_url: founderImageUrl,
       tags: tags.split(",").map((tag) => tag.trim()).filter(Boolean),
       badges: badges.split(",").map((badge) => badge.trim()).filter(Boolean),
       metric,
       interview_content: interviewContent,
       guide_content: guideContent,
-      // content 컬럼은 이제 사용하지 않거나, 호환성을 위해 interviewContent를 넣어둘 수 있음
       content: interviewContent,
     };
 
@@ -84,7 +84,6 @@ const WritePage = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* 왼쪽: 메타데이터 입력 */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
             <h2 className="font-semibold text-gray-900 mb-4">기본 정보</h2>
@@ -102,18 +101,19 @@ const WritePage = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                대표 이미지 URL
-              </label>
-              <input
-                type="text"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="https://..."
-              />
-            </div>
+            <ImageUpload
+              label="대표 이미지"
+              value={imageUrl}
+              onChange={setImageUrl}
+              bucketName="story_images"
+            />
+
+            <ImageUpload
+              label="창업자 프로필 이미지 (선택)"
+              value={founderImageUrl}
+              onChange={setFounderImageUrl}
+              bucketName="story_images"
+            />
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -156,9 +156,7 @@ const WritePage = () => {
           </div>
         </div>
 
-        {/* 오른쪽: 콘텐츠 에디터 */}
         <div className="lg:col-span-2 space-y-8">
-          {/* 인터뷰 섹션 */}
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-2 h-6 bg-blue-500 rounded-full"></span>
@@ -169,7 +167,6 @@ const WritePage = () => {
             </div>
           </div>
 
-          {/* 실전 가이드 섹션 */}
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-2 h-6 bg-green-500 rounded-full"></span>

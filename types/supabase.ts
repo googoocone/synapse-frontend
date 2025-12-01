@@ -138,6 +138,7 @@ export interface Database {
                     created_at: string
                     title: string | null
                     image_url: string | null
+                    founder_image_url: string | null // 추가
                     tags: string[] | null
                     badges: string[] | null
                     metric: string | null
@@ -151,6 +152,7 @@ export interface Database {
                     created_at?: string
                     title?: string | null
                     image_url?: string | null
+                    founder_image_url?: string | null // 추가
                     tags?: string[] | null
                     badges?: string[] | null
                     metric?: string | null
@@ -164,6 +166,7 @@ export interface Database {
                     created_at?: string
                     title?: string | null
                     image_url?: string | null
+                    founder_image_url?: string | null // 추가
                     tags?: string[] | null
                     badges?: string[] | null
                     metric?: string | null

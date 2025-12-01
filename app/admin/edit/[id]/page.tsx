@@ -1,5 +1,6 @@
 "use client";
 
+import ImageUpload from "@/components/admin/ImageUpload";
 import { createClient } from "@/utils/supabase/client";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
@@ -23,6 +24,7 @@ const EditPage = () => {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [founderImageUrl, setFounderImageUrl] = useState("");
   const [tags, setTags] = useState("");
   const [badges, setBadges] = useState("");
   const [metric, setMetric] = useState("");
@@ -30,7 +32,6 @@ const EditPage = () => {
   const [interviewContent, setInterviewContent] = useState<any>(null);
   const [guideContent, setGuideContent] = useState<any>(null);
 
-  // 초기 데이터 로딩용 (Editor에 전달)
   const [initialInterviewContent, setInitialInterviewContent] =
     useState<any>(null);
   const [initialGuideContent, setInitialGuideContent] = useState<any>(null);
@@ -59,15 +60,14 @@ const EditPage = () => {
     if (data) {
       setTitle(data.title);
       setImageUrl(data.image_url);
+      setFounderImageUrl(data.founder_image_url || "");
       setTags(data.tags?.join(", ") || "");
       setBadges(data.badges?.join(", ") || "");
       setMetric(data.metric);
 
-      // 초기값 설정
       setInitialInterviewContent(data.interview_content);
       setInitialGuideContent(data.guide_content);
 
-      // 현재 값도 설정 (변경 안하고 바로 저장할 경우 대비)
       setInterviewContent(data.interview_content);
       setGuideContent(data.guide_content);
     }
@@ -86,12 +86,12 @@ const EditPage = () => {
     const storyData = {
       title,
       image_url: imageUrl,
+      founder_image_url: founderImageUrl,
       tags: tags.split(",").map((tag) => tag.trim()).filter(Boolean),
       badges: badges.split(",").map((badge) => badge.trim()).filter(Boolean),
       metric,
       interview_content: interviewContent,
       guide_content: guideContent,
-      // content 컬럼 업데이트 (호환성 유지)
       content: interviewContent,
     };
 
@@ -133,7 +133,6 @@ const EditPage = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* 왼쪽: 메타데이터 입력 */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
             <h2 className="font-semibold text-gray-900 mb-4">기본 정보</h2>
@@ -150,17 +149,19 @@ const EditPage = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                대표 이미지 URL
-              </label>
-              <input
-                type="text"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
+            <ImageUpload
+              label="대표 이미지"
+              value={imageUrl}
+              onChange={setImageUrl}
+              bucketName="story_images"
+            />
+
+            <ImageUpload
+              label="창업자 프로필 이미지 (선택)"
+              value={founderImageUrl}
+              onChange={setFounderImageUrl}
+              bucketName="story_images"
+            />
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -200,9 +201,7 @@ const EditPage = () => {
           </div>
         </div>
 
-        {/* 오른쪽: 콘텐츠 에디터 */}
         <div className="lg:col-span-2 space-y-8">
-          {/* 인터뷰 섹션 */}
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-2 h-6 bg-blue-500 rounded-full"></span>
@@ -216,7 +215,6 @@ const EditPage = () => {
             </div>
           </div>
 
-          {/* 실전 가이드 섹션 */}
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-2 h-6 bg-green-500 rounded-full"></span>

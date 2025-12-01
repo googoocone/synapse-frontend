@@ -4,7 +4,7 @@ import StoryCard from "@/components/home/FoundaryStory/Card";
 import CategoryFilter from "@/components/home/FoundaryStory/CategoryFilter";
 import NewFoundaryCard from "@/components/home/NewFoundarySection/NewFoundaryCard";
 import { createClient } from "@/utils/supabase/client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 import cardImage2 from "@/assets/profile26.png";
 import cardImage1 from "@/assets/profile33.png";
@@ -17,30 +17,97 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+const ITEMS_PER_PAGE = 8;
+
 const HomePage = () => {
   const supabase = createClient();
 
   const [stories, setStories] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState("전체");
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const fetchStories = async (category: string) => {
-    let query = supabase
-      .from("stories")
-      .select("*")
-      .order("created_at", { ascending: false });
+  const observerTarget = useRef<HTMLDivElement>(null);
 
-    if (category !== "전체") {
-      query = query.contains("tags", [category]);
+  const fetchStories = useCallback(async (pageNumber: number, category: string) => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+      let query = supabase
+        .from("stories")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .range(pageNumber * ITEMS_PER_PAGE, (pageNumber + 1) * ITEMS_PER_PAGE - 1);
+
+      if (category !== "전체") {
+        query = query.contains("tags", [category]);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error("스토리 로딩 실패:", error);
+      } else {
+        if (data) {
+          if (data.length < ITEMS_PER_PAGE) {
+            setHasMore(false);
+          }
+
+          setStories((prev) => {
+            if (pageNumber === 0) return data;
+            // 중복 제거 (혹시 모를 경우 대비)
+            const newStories = data.filter(
+              (newStory) => !prev.some((existing) => existing.id === newStory.id)
+            );
+            return [...prev, ...newStories];
+          });
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []); // 의존성 배열 비움 (isLoading 등은 ref로 관리하거나 함수형 업데이트 사용 권장되지만, 여기선 간단히 처리)
+
+  // 카테고리 변경 시 초기화
+  useEffect(() => {
+    setStories([]);
+    setPage(0);
+    setHasMore(true);
+    fetchStories(0, activeCategory);
+  }, [activeCategory]);
+
+  // 페이지 변경 시 추가 로드
+  useEffect(() => {
+    if (page > 0) {
+      fetchStories(page, activeCategory);
+    }
+  }, [page]);
+
+  // Intersection Observer 설정
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoading) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
     }
 
-    const { data, error } = await query;
-    if (error) console.error("스토리 로딩 실패:", error);
-    else setStories(data || []);
-  };
-
-  useEffect(() => {
-    fetchStories(activeCategory);
-  }, [activeCategory]);
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, [hasMore, isLoading]);
 
   const newFoundaryCards = [
     {
@@ -151,11 +218,22 @@ const HomePage = () => {
           {stories.length > 0 ? (
             stories.map((story) => <StoryCard key={story.id} story={story} />)
           ) : (
-            <p className="col-span-full text-center text-gray-500 py-8">
-              해당 카테고리에 스토리가 없습니다.
-            </p>
+            !isLoading && (
+              <p className="col-span-full text-center text-gray-500 py-8">
+                해당 카테고리에 스토리가 없습니다.
+              </p>
+            )
           )}
         </div>
+
+        {/* 무한 스크롤 감지용 Sentinel */}
+        {hasMore && (
+          <div ref={observerTarget} className="w-full h-20 flex items-center justify-center mt-8">
+            {isLoading && (
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            )}
+          </div>
+        )}
       </main>
 
       {/* Swiper 커스텀 스타일 */}

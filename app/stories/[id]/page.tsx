@@ -1,4 +1,4 @@
-import StoryDetailTabs from "./StoryDetailTabs"; // ✅ 새로 추가
+import StoryDetailTabs from "./StoryDetailTabs";
 
 import { createClient } from "@/utils/supabase/server";
 import { Badge, Calendar, Edit, Tag } from "lucide-react";
