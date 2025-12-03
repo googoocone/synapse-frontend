@@ -10,7 +10,10 @@ import {
   XCircle,
   AlertCircle,
   FileText,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
+import Card from "@/components/home/FoundaryStory/Card";
 
 interface Subscription {
   id: string;
@@ -35,6 +38,8 @@ export default function MyPage() {
   const [name, setName] = useState("");
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [cancelling, setCancelling] = useState(false);
+  const [likedStories, setLikedStories] = useState<any[]>([]);
+  const [isSubscriptionExpanded, setIsSubscriptionExpanded] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,6 +58,9 @@ export default function MyPage() {
 
       // 구독 정보 가져오기
       await fetchSubscription(user.id);
+
+      // 찜한 스토리 가져오기
+      await fetchLikedStories(user.id);
 
       setLoading(false);
     };
@@ -76,6 +84,32 @@ export default function MyPage() {
       setSubscription(data);
     } catch (error) {
       console.error("구독 조회 실패:", error);
+    }
+  };
+
+  const fetchLikedStories = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("likes")
+        .select(`
+          story_id,
+          stories (*)
+        `)
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("찜한 스토리 로딩 실패:", error);
+        return;
+      }
+
+      if (data) {
+        // likes 테이블에서 가져온 데이터 구조를 stories 배열로 변환
+        const stories = data.map((item: any) => item.stories);
+        setLikedStories(stories);
+      }
+    } catch (error) {
+      console.error("찜한 스토리 조회 에러:", error);
     }
   };
 
@@ -314,144 +348,186 @@ export default function MyPage() {
         </div>
 
         {/* 구독 관리 카드 */}
-        <div className="bg-white rounded-lg shadow-sm p-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">구독 관리</h2>
-            {subscription && getStatusBadge(subscription.status)}
+        <div className="bg-white rounded-lg shadow-sm p-8 mb-6 transition-all duration-300">
+          <div
+            className="flex items-center justify-between cursor-pointer"
+            onClick={() => setIsSubscriptionExpanded(!isSubscriptionExpanded)}
+          >
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold text-gray-900">구독 관리</h2>
+              {subscription && getStatusBadge(subscription.status)}
+            </div>
+            <button className="text-gray-500 hover:text-gray-700">
+              {isSubscriptionExpanded ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
+            </button>
           </div>
 
-          {!subscription ? (
-            // 구독 없음
-            <div className="text-center py-8">
-              <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 mb-4">활성화된 구독이 없습니다</p>
-              <button
-                onClick={() => router.push("/subscription")}
-                className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
-              >
-                구독하기
-              </button>
-            </div>
-          ) : (
-            // 구독 있음
-            <>
-              {/* 플랜 정보 */}
-              <div className="border border-gray-200 rounded-xl p-4 mb-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <p className="text-sm text-gray-500">현재 플랜</p>
-                    <p className="text-lg font-semibold text-gray-900">
-                      {subscription.subscription_plans.name}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-orange-600">
-                      ₩{subscription.subscription_plans.price.toLocaleString()}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {subscription.subscription_plans.duration_months === 1
-                        ? "/ 월"
-                        : "/ 년"}
-                    </p>
-                  </div>
+          {isSubscriptionExpanded && (
+            <div className="mt-6 animate-in fade-in slide-in-from-top-2 duration-200">
+              {!subscription ? (
+                // 구독 없음
+                <div className="text-center py-8">
+                  <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600 mb-4">활성화된 구독이 없습니다</p>
+                  <button
+                    onClick={() => router.push("/subscription")}
+                    className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+                  >
+                    구독하기
+                  </button>
                 </div>
-              </div>
-
-              {/* 구독 정보 */}
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-3">
-                  <Calendar className="w-5 h-5 text-gray-400" />
-                  <div>
-                    <p className="text-sm text-gray-500">구독 시작일</p>
-                    <p className="text-sm font-medium text-gray-900">
-                      {formatDate(subscription.started_at)}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Calendar className="w-5 h-5 text-gray-400" />
-                  <div>
-                    <p className="text-sm text-gray-500">
-                      {subscription.status === "cancelled"
-                        ? "만료 예정일"
-                        : "다음 결제일"}
-                    </p>
-                    <p className="text-sm font-medium text-gray-900">
-                      {formatDate(
-                        subscription.status === "cancelled"
-                          ? subscription.expires_at
-                          : subscription.next_billing_date
-                      )}
-                    </p>
-                  </div>
-                </div>
-
-                {subscription.status === "cancelled" &&
-                  subscription.cancelled_at && (
-                    <div className="flex items-center gap-3">
-                      <XCircle className="w-5 h-5 text-gray-400" />
+              ) : (
+                // 구독 있음
+                <>
+                  {/* 플랜 정보 */}
+                  <div className="border border-gray-200 rounded-xl p-4 mb-4">
+                    <div className="flex items-center justify-between mb-3">
                       <div>
-                        <p className="text-sm text-gray-500">해지 신청일</p>
-                        <p className="text-sm font-medium text-gray-900">
-                          {formatDate(subscription.cancelled_at)}
+                        <p className="text-sm text-gray-500">현재 플랜</p>
+                        <p className="text-lg font-semibold text-gray-900">
+                          {subscription.subscription_plans.name}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-orange-600">
+                          ₩{subscription.subscription_plans.price.toLocaleString()}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {subscription.subscription_plans.duration_months === 1
+                            ? "/ 월"
+                            : "/ 년"}
                         </p>
                       </div>
                     </div>
+                  </div>
+
+                  {/* 구독 정보 */}
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-5 h-5 text-gray-400" />
+                      <div>
+                        <p className="text-sm text-gray-500">구독 시작일</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          {formatDate(subscription.started_at)}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-5 h-5 text-gray-400" />
+                      <div>
+                        <p className="text-sm text-gray-500">
+                          {subscription.status === "cancelled"
+                            ? "만료 예정일"
+                            : "다음 결제일"}
+                        </p>
+                        <p className="text-sm font-medium text-gray-900">
+                          {formatDate(
+                            subscription.status === "cancelled"
+                              ? subscription.expires_at
+                              : subscription.next_billing_date
+                          )}
+                        </p>
+                      </div>
+                    </div>
+
+                    {subscription.status === "cancelled" &&
+                      subscription.cancelled_at && (
+                        <div className="flex items-center gap-3">
+                          <XCircle className="w-5 h-5 text-gray-400" />
+                          <div>
+                            <p className="text-sm text-gray-500">해지 신청일</p>
+                            <p className="text-sm font-medium text-gray-900">
+                              {formatDate(subscription.cancelled_at)}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                  </div>
+
+                  {/* 안내 메시지 */}
+                  {subscription.status === "cancelled" ? (
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                      <p className="text-sm text-yellow-800">
+                        <strong>구독이 해지되었습니다.</strong>
+                        <br />
+                        {formatDate(subscription.expires_at)}까지 서비스를 이용하실
+                        수 있습니다.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                      <p className="text-sm text-blue-800">
+                        <strong>자동 갱신 안내</strong>
+                        <br />
+                        다음 결제일에 자동으로 결제됩니다. 구독을 해지하셔도 현재
+                        구독 기간 만료일까지는 서비스를 이용하실 수 있습니다.
+                      </p>
+                    </div>
                   )}
-              </div>
 
-              {/* 안내 메시지 */}
-              {subscription.status === "cancelled" ? (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-yellow-800">
-                    <strong>구독이 해지되었습니다.</strong>
-                    <br />
-                    {formatDate(subscription.expires_at)}까지 서비스를 이용하실
-                    수 있습니다.
-                  </p>
-                </div>
-              ) : (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-blue-800">
-                    <strong>자동 갱신 안내</strong>
-                    <br />
-                    다음 결제일에 자동으로 결제됩니다. 구독을 해지하셔도 현재
-                    구독 기간 만료일까지는 서비스를 이용하실 수 있습니다.
-                  </p>
-                </div>
+                  {/* 버튼 */}
+                  <div className="space-y-2">
+                    {subscription.status === "active" && (
+                      <button
+                        onClick={handleCancelSubscription}
+                        disabled={cancelling}
+                        className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {cancelling ? "처리 중..." : "구독 해지하기"}
+                      </button>
+                    )}
+
+                    {subscription.status === "cancelled" && (
+                      <button
+                        onClick={() => router.push("/subscription")}
+                        className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition-colors"
+                      >
+                        다시 구독하기
+                      </button>
+                    )}
+
+                    <button
+                      onClick={() => router.push("/payment-history")}
+                      className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                    >
+                      <FileText className="w-4 h-4" />
+                      결제 내역 보기
+                    </button>
+                  </div>
+                </>
               )}
+            </div>
+          )}
+        </div>
 
-              {/* 버튼 */}
-              <div className="space-y-2">
-                {subscription.status === "active" && (
-                  <button
-                    onClick={handleCancelSubscription}
-                    disabled={cancelling}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {cancelling ? "처리 중..." : "구독 해지하기"}
-                  </button>
-                )}
+        {/* 찜한 스토리 섹션 */}
+        <div className="bg-white rounded-lg shadow-sm p-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">
+            찜한 스토리
+          </h2>
 
-                {subscription.status === "cancelled" && (
-                  <button
-                    onClick={() => router.push("/subscription")}
-                    className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition-colors"
-                  >
-                    다시 구독하기
-                  </button>
-                )}
-
-                <button
-                  onClick={() => router.push("/payment-history")}
-                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
-                >
-                  <FileText className="w-4 h-4" />
-                  결제 내역 보기
+          {likedStories.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {likedStories.map((story) => (
+                <div key={story.id} className="h-[420px]">
+                  <Card story={story} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              <p>아직 찜한 스토리가 없습니다.</p>
+              <Link href="/home">
+                <button className="mt-4 text-[#ff5833] font-medium hover:underline">
+                  스토리 보러가기
                 </button>
-              </div>
-            </>
+              </Link>
+            </div>
           )}
         </div>
       </div>

@@ -16,14 +16,14 @@ export default function HeaderClient({ user }: HeaderClientProps) {
                 <HeaderMenu isLanding={true} />
 
                 {/* 모바일에서만 보이는 Foundary */}
-                <Link href="/" className="md:hidden">
+                <Link href={user ? "/home" : "/"} className="md:hidden">
                     <span className="text-xl font-black text-[#ff5833]">Foundary</span>
                 </Link>
             </div>
 
             {/* 중앙: Foundary (데스크탑) */}
             <nav className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                <Link href="/">
+                <Link href={user ? "/home" : "/"}>
                     <span className="text-2xl md:text-[32px] font-black whitespace-nowrap text-[#ff5833]">
                         Foundary
                     </span>
@@ -35,7 +35,7 @@ export default function HeaderClient({ user }: HeaderClientProps) {
                 {user ? (
                     <>
                         <Link href="/subscription" className="hidden md:block">
-                            <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md font-semibold transition-colors cursor-pointer whitespace-nowrap bg-black text-white hover:bg-gray-800">
+                            <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md font-semibold transition-colors cursor-pointer whitespace-nowrap bg-[#222222] text-white hover:bg-gray-800">
                                 구독하기
                             </button>
                         </Link>
@@ -45,7 +45,7 @@ export default function HeaderClient({ user }: HeaderClientProps) {
                     <>
                         {/* 구독하기 버튼 - 데스크탑에서만 보임 */}
                         <Link href="/subscription" className=" md:block">
-                            <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md font-semibold transition-colors cursor-pointer whitespace-nowrap bg-black text-white hover:bg-gray-800">
+                            <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md font-semibold transition-colors cursor-pointer whitespace-nowrap bg-[#222222] text-white hover:bg-gray-800">
                                 구독하기
                             </button>
                         </Link>

@@ -2,8 +2,28 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LandingPage() {
+  const supabase = createClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        router.push("/home");
+      }
+    };
+
+    checkUser();
+  }, [supabase, router]);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white relative overflow-hidden">
       {/* Main Content Container */}

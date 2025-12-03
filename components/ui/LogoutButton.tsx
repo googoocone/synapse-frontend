@@ -40,21 +40,21 @@ export default function LogoutButton() {
       {/* 메인 버튼 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md border border-black/80 text-black/80 hover:bg-black/80 hover:text-white transition-colors cursor-pointer whitespace-nowrap text-xs sm:text-sm"
+        className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] text-[#222222] hover:bg-[#222222] hover:text-white transition-colors cursor-pointer whitespace-nowrap text-xs sm:text-sm"
       >
         내 계정
       </button>
 
       {/* 드롭다운 메뉴 */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-[160px] bg-[#ff5833] rounded-lg shadow-xl z-50 py-2 ">
+        <div className="absolute top-full right-0 mt-2 w-[160px] bg-white rounded-lg shadow-xl z-50 py-2 border border-gray-100">
           <nav>
             <ul className="space-y-1">
               <li>
                 <Link
                   href="/mypage"
                   onClick={() => setIsOpen(false)}
-                  className="block px-4 py-2.5 text-gray-700  transition-colors font-medium text-sm hover:text-white"
+                  className="block px-4 py-2.5 text-[#222222] hover:bg-gray-50 transition-colors font-medium text-sm"
                 >
                   마이페이지
                 </Link>
@@ -62,7 +62,7 @@ export default function LogoutButton() {
               <li>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2.5 text-gray-700 hover:bg-[#ff5833] hover:text-white transition-colors font-medium text-sm cursor-pointer"
+                  className="w-full text-left px-4 py-2.5 text-[#222222] hover:bg-gray-50 transition-colors font-medium text-sm cursor-pointer"
                 >
                   로그아웃
                 </button>
