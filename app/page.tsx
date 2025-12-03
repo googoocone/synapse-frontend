@@ -214,16 +214,18 @@ const HomePage = () => {
           <CategoryFilter onCategoryChange={setActiveCategory} />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-          {stories.length > 0 ? (
-            stories.map((story) => <StoryCard key={story.id} story={story} />)
-          ) : (
-            !isLoading && (
-              <p className="col-span-full text-center text-gray-500 py-8">
-                해당 카테고리에 스토리가 없습니다.
-              </p>
-            )
-          )}
+        <div className="overflow-x-auto pb-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+            {stories.length > 0 ? (
+              stories.map((story) => <StoryCard key={story.id} story={story} />)
+            ) : (
+              !isLoading && (
+                <p className="col-span-full text-center text-gray-500 py-8">
+                  해당 카테고리에 스토리가 없습니다.
+                </p>
+              )
+            )}
+          </div>
         </div>
 
         {/* 무한 스크롤 감지용 Sentinel */}
