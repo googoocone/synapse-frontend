@@ -30,11 +30,6 @@ export default function LandingPage() {
       <div className="relative w-full max-w-[1200px] flex flex-col items-center justify-center px-4">
         {/* Center Section: Text - Video - Text */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 w-full">
-          {/* Left Text */}
-          <div className="hidden md:block text-4xl md:text-6xl font-black text-black whitespace-nowrap">
-            1인창업
-          </div>
-
           {/* Main Video */}
           <div className="relative w-full max-w-[800px] aspect-[16/9] rounded-xl overflow-hidden">
             <video
@@ -46,11 +41,6 @@ export default function LandingPage() {
             >
               <source src="/main_video.mp4" type="video/mp4" />
             </video>
-          </div>
-
-          {/* Right Text */}
-          <div className="hidden md:block text-4xl md:text-6xl font-black text-black whitespace-nowrap">
-            인사이트
           </div>
 
           {/* Mobile Text (Visible only on small screens, stacked) */}
