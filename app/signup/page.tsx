@@ -204,7 +204,7 @@ const SignUpPage = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF7A00]"
+                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833]"
                 placeholder="you@example.com"
               />
             </div>
@@ -219,7 +219,7 @@ const SignUpPage = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF7A00]"
+                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833]"
                 placeholder="••••••••"
               />
             </div>
@@ -234,7 +234,7 @@ const SignUpPage = () => {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF7A00]"
+                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833]"
                 placeholder="••••••••"
               />
             </div>
@@ -253,7 +253,7 @@ const SignUpPage = () => {
                     setPhoneNumber(formatPhoneNumber(e.target.value))
                   }
                   disabled={isVerified}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF7A00] disabled:bg-gray-100"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833] disabled:bg-gray-100"
                   placeholder="010-1234-5678"
                   maxLength={13}
                 />
@@ -261,17 +261,17 @@ const SignUpPage = () => {
                   type="button"
                   onClick={handleSendCode}
                   disabled={isSending || isVerified || timer > 0}
-                  className="px-4 py-2 text-sm font-medium text-white bg-[#FF7A00] rounded-md hover:bg-[#FF7A00]/90 disabled:bg-gray-300 disabled:cursor-not-allowed whitespace-nowrap"
+                  className="px-4 py-2 text-sm font-medium text-white bg-[#ff5833] rounded-md hover:bg-[#ff5833]/90 disabled:bg-gray-300 disabled:cursor-not-allowed whitespace-nowrap"
                 >
                   {isVerified
                     ? "인증완료"
                     : timer > 0
-                    ? `재발송(${Math.floor(timer / 60)}:${(timer % 60)
+                      ? `재발송(${Math.floor(timer / 60)}:${(timer % 60)
                         .toString()
                         .padStart(2, "0")})`
-                    : isSending
-                    ? "발송중..."
-                    : "인증번호"}
+                      : isSending
+                        ? "발송중..."
+                        : "인증번호"}
                 </button>
               </div>
             </div>
@@ -289,14 +289,14 @@ const SignUpPage = () => {
                     onChange={(e) =>
                       setVerificationCode(e.target.value.replace(/[^0-9]/g, ""))
                     }
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF7A00]"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833]"
                     placeholder="6자리 숫자"
                     maxLength={6}
                   />
                   <button
                     type="button"
                     onClick={handleVerifyCode}
-                    className="px-4 py-2 text-sm font-medium text-white bg-[#FF7A00] rounded-md hover:bg-[#FF7A00]/90 whitespace-nowrap"
+                    className="px-4 py-2 text-sm font-medium text-white bg-[#ff5833] rounded-md hover:bg-[#ff5833]/90 whitespace-nowrap"
                   >
                     확인
                   </button>
@@ -314,7 +314,7 @@ const SignUpPage = () => {
             <button
               type="submit"
               disabled={!isVerified}
-              className="w-full px-4 py-2 text-sm font-medium text-white bg-[#FF7A00] rounded-md hover:bg-[#FF7A00]/90 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 text-sm font-medium text-white bg-[#ff5833] rounded-md hover:bg-[#ff5833]/90 disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
               가입하기
             </button>
@@ -346,7 +346,7 @@ const SignUpPage = () => {
             {/* 메시지 */}
             <div className="space-y-4 mb-6">
               <p className="text-center text-gray-700">
-                <span className="font-semibold text-[#FF7A00]">{email}</span>로
+                <span className="font-semibold text-[#ff5833]">{email}</span>로
                 <br />
                 인증 이메일을 발송했어요!
               </p>
@@ -371,7 +371,7 @@ const SignUpPage = () => {
                 setShowSuccessModal(false);
                 router.push("/login");
               }}
-              className="w-full px-6 py-3 bg-[#FF7A00] text-white font-semibold rounded-lg hover:bg-[#FF7A00]/90 transition-colors"
+              className="w-full px-6 py-3 bg-[#ff5833] text-white font-semibold rounded-lg hover:bg-[#ff5833]/90 transition-colors"
             >
               로그인 페이지로 이동
             </button>

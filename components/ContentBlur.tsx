@@ -61,7 +61,7 @@ export default function ContentBlur({
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/login">
-              <button className="px-8 py-4 bg-[#FF7A00] text-white font-bold rounded-lg hover:bg-[#FF7A00]/90 transition-colors shadow-lg text-lg">
+              <button className="px-8 py-4 bg-[#ff5833] text-white font-bold rounded-lg hover:bg-[#ff5833]/90 transition-colors shadow-lg text-lg">
                 무료 가입하고 전체 내용 보기 →
               </button>
             </Link>
@@ -116,7 +116,7 @@ export default function ContentBlur({
             이미 회원이신가요?{" "}
             <Link
               href="/login"
-              className="text-[#FF7A00] hover:underline font-semibold"
+              className="text-[#ff5833] hover:underline font-semibold"
             >
               로그인하기
             </Link>

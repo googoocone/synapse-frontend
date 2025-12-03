@@ -21,7 +21,7 @@ export default async function Header() {
   console.log("[Header] User ID:", user?.id || "No ID");
 
   return (
-    <header className="fixed top-0 left-0 right-0 mx-auto z-20 w-full max-w-[1200px] h-[50px] md:h-[60px] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#FF7A00] rounded-none md:rounded-md">
+    <header className="fixed top-0 left-0 right-0 mx-auto z-20 w-full max-w-[1200px] h-[50px] md:h-[60px] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#ff5833] rounded-none md:rounded-md">
       {/* 왼쪽: 메뉴 + Foundary (모바일) */}
       <div className="flex items-center gap-2 md:flex-none md:w-auto">
         <HeaderMenu />

@@ -150,7 +150,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading || oauthLoading !== null}
-                className="w-full py-3.5 bg-white text-[#FF7A00] border-1 font-semibold rounded-full hover:bg-[#FF7A00] hover:text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-white text-[#ff5833] border-1 font-semibold rounded-full hover:bg-[#ff5833] hover:text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 회원가입
               </button>

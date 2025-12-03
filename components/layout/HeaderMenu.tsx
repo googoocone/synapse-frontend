@@ -67,9 +67,8 @@ export default function HeaderMenu() {
       {/* 모바일: 드롭다운 메뉴 (헤더 아래) */}
       {isMobile ? (
         <div
-          className={`fixed left-0 right-0 top-[50px] bg-[#FF7A00] shadow-xl z-50 overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`fixed left-0 right-0 top-[50px] bg-[#ff5833] shadow-xl z-50 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
           <nav className="py-4 px-4">
             <ul className="space-y-2">
@@ -90,7 +89,7 @@ export default function HeaderMenu() {
       ) : (
         /* 데스크탑: 드롭다운 메뉴 */
         isOpen && (
-          <div className="absolute top-full left-0 mt-2 w-[220px] bg-[#FF7A00] rounded-lg shadow-xl z-50 py-2">
+          <div className="absolute top-full left-0 mt-2 w-[220px] bg-[#ff5833] rounded-lg shadow-xl z-50 py-2">
             <nav>
               <ul className="space-y-1">
                 {menuItems.map((item) => (

@@ -8,7 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        primary: "#ff5833",
+      },
 
       fontSize: {},
 

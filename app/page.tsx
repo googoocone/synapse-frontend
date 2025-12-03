@@ -164,7 +164,7 @@ const HomePage = () => {
       {/* NewFoundary 섹션 */}
       <section className="mt-8 md:mt-12">
         <h2 className="text-xl md:text-2xl font-bold flex gap-2 text-gray-900 mb-4 md:mb-6 justify-center">
-          <p className="text-[#FF7A00]">New</p> Foundary
+          <p className="text-[#ff5833]">New</p> Foundary
         </h2>
 
         {/* 모바일/태블릿: Swiper */}
@@ -208,7 +208,7 @@ const HomePage = () => {
       {/* --- 콘텐츠 섹션 --- */}
       <main className="my-8 md:my-12">
         <h2 className="text-xl md:text-2xl font-bold flex gap-2 text-gray-900 mb-4 md:mb-6 justify-center">
-          <p className="text-[#FF7A00]">Foundary</p> Story
+          <p className="text-[#ff5833]">Foundary</p> Story
         </h2>
         <div className="my-6 md:my-8 overflow-x-auto">
           <CategoryFilter onCategoryChange={setActiveCategory} />

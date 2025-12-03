@@ -47,7 +47,7 @@ export default function LogoutButton() {
 
       {/* 드롭다운 메뉴 */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-[160px] bg-[#FF7A00] rounded-lg shadow-xl z-50 py-2 ">
+        <div className="absolute top-full right-0 mt-2 w-[160px] bg-[#ff5833] rounded-lg shadow-xl z-50 py-2 ">
           <nav>
             <ul className="space-y-1">
               <li>
@@ -62,7 +62,7 @@ export default function LogoutButton() {
               <li>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2.5 text-gray-700 hover:bg-[#FF7A00] hover:text-white transition-colors font-medium text-sm cursor-pointer"
+                  className="w-full text-left px-4 py-2.5 text-gray-700 hover:bg-[#ff5833] hover:text-white transition-colors font-medium text-sm cursor-pointer"
                 >
                   로그아웃
                 </button>
