@@ -8,34 +8,62 @@ export default function LandingPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-white relative overflow-hidden">
       {/* Main Content Container */}
       <div className="relative w-full max-w-[1200px] flex flex-col items-center justify-center px-4">
-        {/* The Main Image */}
-        <div className="relative w-full aspect-[16/9] md:aspect-[2/1]">
-          <Image
-            src="/landing_main.png"
-            alt="Foundary Story"
-            fill
-            className="object-contain"
-            priority
-          />
+        {/* Center Section: Text - Video - Text */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 w-full">
+          {/* Left Text */}
+          <div className="hidden md:block text-4xl md:text-6xl font-black text-black whitespace-nowrap">
+            1인창업
+          </div>
 
-          {/* Video Overlay - Centered */}
-          {/* Note: The size and position are approximate and may need adjustment to match the image perfectly */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[25%] aspect-[9/16] md:w-[20%] md:aspect-[3/4] bg-black rounded-xl overflow-hidden shadow-2xl">
+          {/* Main Video */}
+          <div className="relative w-full max-w-[800px] aspect-[16/9] rounded-xl overflow-hidden ">
             <video
               className="w-full h-full object-cover"
               autoPlay
               muted
               loop
               playsInline
-              poster="/landing_main.png" // Optional: use a specific poster if available
             >
-              {/* User can replace this with the actual video path */}
-              <source src="/landing_video.mp4" type="video/mp4" />
-              <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white text-xs text-center p-2">
-                Video Area
-              </div>
+              <source src="/main_video.mp4" type="video/mp4" />
             </video>
           </div>
+
+          {/* Right Text */}
+          <div className="hidden md:block text-4xl md:text-6xl font-black text-black whitespace-nowrap">
+            인사이트
+          </div>
+
+          {/* Mobile Text (Visible only on small screens, stacked) */}
+          <div className="md:hidden flex gap-4 text-3xl font-black text-black mt-4">
+            <span>1인창업</span>
+            <span>인사이트</span>
+          </div>
+        </div>
+
+        {/* Bottom Text with Highlights */}
+        <div className="mt-8 md:mt-12 text-center space-y-2">
+          <p className="text-lg md:text-2xl text-gray-800 font-medium leading-relaxed">
+            성공한 창업자들의{" "}
+            <span className="relative inline-block font-bold z-10 px-1">
+              {/* 아이디어 - Yellow Highlight */}
+              <span className="absolute bottom-1 left-0 w-full h-3 md:h-4 bg-yellow-300 -z-10 opacity-70"></span>
+              아이디어
+            </span>
+            와 수 년간의{" "}
+            <span className="relative inline-block font-bold z-10 px-1">
+              {/* 노하우 - Blue Highlight */}
+              <span className="absolute bottom-1 left-0 w-full h-3 md:h-4 bg-blue-300 -z-10 opacity-70"></span>
+              노하우
+            </span>
+          </p>
+          <p className="text-lg md:text-2xl text-gray-800 font-medium leading-relaxed">
+            초보도 따라할 수 있는 12단계{" "}
+            <span className="relative inline-block font-bold z-10 px-1">
+              {/* 실천 가이드북 - Orange Highlight */}
+              <span className="absolute bottom-1 left-0 w-full h-3 md:h-4 bg-orange-300 -z-10 opacity-70"></span>
+              실천 가이드북
+            </span>
+          </p>
         </div>
 
         {/* Navigation / Enter Button */}

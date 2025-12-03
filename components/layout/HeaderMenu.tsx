@@ -6,7 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-export default function HeaderMenu() {
+interface HeaderMenuProps {
+  isLanding?: boolean;
+}
+
+export default function HeaderMenu({ isLanding = false }: HeaderMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -50,7 +54,8 @@ export default function HeaderMenu() {
       {/* 메뉴 버튼 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center gap-2 z-30 relative cursor-pointer"
+        className={`flex items-center justify-center gap-2 z-30 relative cursor-pointer ${isLanding ? "brightness-0" : ""
+          }`}
         aria-label="메뉴 열기"
       >
         <Image src={Menu} alt="메뉴" width={24} height={24} />
@@ -67,8 +72,8 @@ export default function HeaderMenu() {
       {/* 모바일: 드롭다운 메뉴 (헤더 아래) */}
       {isMobile ? (
         <div
-          className={`fixed left-0 right-0 top-[50px] bg-[#ff5833] shadow-xl z-50 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
-            }`}
+          className={`fixed left-0 right-0 top-[50px] shadow-xl z-50 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+            } ${isLanding ? "bg-white" : "bg-[#ff5833]"}`}
         >
           <nav className="py-4 px-4">
             <ul className="space-y-2">
@@ -77,7 +82,10 @@ export default function HeaderMenu() {
                   <Link
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 rounded-lg text-white font-medium hover:bg-black/10 transition-colors"
+                    className={`block px-4 py-3 rounded-lg font-medium transition-colors ${isLanding
+                        ? "text-black hover:bg-gray-100"
+                        : "text-white hover:bg-black/10"
+                      }`}
                   >
                     {item.label}
                   </Link>
@@ -89,7 +97,10 @@ export default function HeaderMenu() {
       ) : (
         /* 데스크탑: 드롭다운 메뉴 */
         isOpen && (
-          <div className="absolute top-full left-0 mt-2 w-[220px] bg-[#ff5833] rounded-lg shadow-xl z-50 py-2">
+          <div
+            className={`absolute top-full left-0 mt-2 w-[220px] rounded-lg shadow-xl z-50 py-2 ${isLanding ? "bg-white border border-gray-100" : "bg-[#ff5833]"
+              }`}
+          >
             <nav>
               <ul className="space-y-1">
                 {menuItems.map((item) => (
@@ -97,7 +108,10 @@ export default function HeaderMenu() {
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-white hover:bg-black/10 transition-colors font-medium"
+                      className={`block px-4 py-3 transition-colors font-medium ${isLanding
+                          ? "text-black hover:bg-gray-100"
+                          : "text-white hover:bg-black/10"
+                        }`}
                     >
                       {item.label}
                     </Link>

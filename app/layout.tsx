@@ -64,10 +64,14 @@ export const metadata: Metadata = {
   },
 };
 
+import MainLayoutWrapper from "@/components/layout/MainLayoutWrapper";
+
+// ... existing code ...
+
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.NodeNode;
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} bg-gray-100`}>
@@ -75,9 +79,7 @@ export default function RootLayout({
         className={`${pretendard.className} antialiased min-h-screen flex flex-col bg-gray-100`}
       >
         <Header />
-        <main className="w-full sm:w-[1200px] flex-1 mt-[70px] mx-auto">
-          {children}
-        </main>
+        <MainLayoutWrapper>{children}</MainLayoutWrapper>
         <Footer />
       </body>
     </html>
