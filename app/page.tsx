@@ -16,9 +16,9 @@ export default function LandingPage() {
           </div>
 
           {/* Main Video */}
-          <div className="relative w-full max-w-[800px] aspect-[16/9] rounded-xl overflow-hidden ">
+          <div className="relative w-full max-w-[800px] aspect-[16/9] rounded-xl overflow-hidden bg-white">
             <video
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-[1.01]"
               autoPlay
               muted
               loop
