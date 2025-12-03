@@ -132,8 +132,8 @@ const EditPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-1 space-y-6">
+      <div className="space-y-8">
+        <div className="space-y-6">
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
             <h2 className="font-semibold text-gray-900 mb-4">기본 정보</h2>
 
@@ -201,7 +201,7 @@ const EditPage = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-8">
+        <div className="space-y-8">
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-2 h-6 bg-blue-500 rounded-full"></span>
