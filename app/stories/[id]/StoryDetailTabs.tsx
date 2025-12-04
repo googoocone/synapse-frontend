@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import BlockNoteRenderer from "@/components/BlockNoteRenderer";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type StoryDetailTabsProps = {
   interviewContent: any;
@@ -142,28 +143,54 @@ const StoryDetailTabs = ({
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 min-h-[300px]">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    {guideContent[currentStep].title}
-                  </h3>
-                  {isLoggedIn ? (
-                    <BlockNoteRenderer
-                      content={guideContent[currentStep].content}
-                    />
-                  ) : (
-                    <div className="relative">
-                      <div className="blur-sm pointer-events-none select-none">
-                        <BlockNoteRenderer
-                          content={guideContent[currentStep].content}
-                        />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="rounded-lg bg-white/95 px-4 py-3 text-sm font-medium text-gray-700 shadow-md">
-                          전체 내용을 보시려면 로그인 해주세요.
-                        </div>
+                <div className="relative bg-white rounded-xl p-4 md:p-6 shadow-sm border border-gray-100 min-h-[300px] group/container">
+                  {/* 왼쪽 클릭 영역 (이전 단계) */}
+                  {currentStep > 0 && (
+                    <div
+                      onClick={handlePrevStep}
+                      className="absolute left-0 top-0 bottom-0 w-16 md:w-24 flex items-center justify-start pl-2 md:pl-4 cursor-pointer z-10 hover:bg-gradient-to-r hover:from-black/5 hover:to-transparent transition-all group/nav"
+                    >
+                      <div className="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-sm opacity-0 group-hover/nav:opacity-100 transition-opacity transform -translate-x-2 group-hover/nav:translate-x-0">
+                        <ChevronLeft className="w-6 h-6 text-gray-700" />
                       </div>
                     </div>
                   )}
+
+                  {/* 오른쪽 클릭 영역 (다음 단계) */}
+                  {currentStep < guideContent.length - 1 && (
+                    <div
+                      onClick={handleNextStep}
+                      className="absolute right-0 top-0 bottom-0 w-16 md:w-24 flex items-center justify-end pr-2 md:pr-4 cursor-pointer z-10 hover:bg-gradient-to-l hover:from-black/5 hover:to-transparent transition-all group/nav"
+                    >
+                      <div className="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-sm opacity-0 group-hover/nav:opacity-100 transition-opacity transform translate-x-2 group-hover/nav:translate-x-0">
+                        <ChevronRight className="w-6 h-6 text-gray-700" />
+                      </div>
+                    </div>
+                  )}
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 px-0 md:px-0">
+                    {guideContent[currentStep].title}
+                  </h3>
+                  <div className="px-0 md:px-0">
+                    {isLoggedIn ? (
+                      <BlockNoteRenderer
+                        content={guideContent[currentStep].content}
+                      />
+                    ) : (
+                      <div className="relative">
+                        <div className="blur-sm pointer-events-none select-none">
+                          <BlockNoteRenderer
+                            content={guideContent[currentStep].content}
+                          />
+                        </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="rounded-lg bg-white/95 px-4 py-3 text-sm font-medium text-gray-700 shadow-md">
+                            전체 내용을 보시려면 로그인 해주세요.
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex justify-center gap-4 pt-4">

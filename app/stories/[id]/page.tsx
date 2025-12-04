@@ -63,7 +63,7 @@ const StoryDetailPage = async ({ params }: Props) => {
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative pb-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative pb-16">
         <div className="bg-white rounded-lg shadow-xl p-6 md:p-10">
           <header className="mb-8">
             {isAdmin && (
