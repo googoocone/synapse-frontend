@@ -2,20 +2,10 @@
 
 import StoryCard from "@/components/home/FoundaryStory/Card";
 import CategoryFilter from "@/components/home/FoundaryStory/CategoryFilter";
-import NewFoundaryCard from "@/components/home/NewFoundarySection/NewFoundaryCard";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useRef, useState, useCallback } from "react";
 
-import cardImage2 from "@/assets/profile26.png";
-import cardImage1 from "@/assets/profile33.png";
-import cardImage3 from "@/assets/profile38.png";
-
-// Swiper import
 import Link from "next/link";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -109,35 +99,7 @@ const HomePage = () => {
     };
   }, [hasMore, isLoading]);
 
-  const newFoundaryCards = [
-    {
-      href: "/stories/33",
-      imageUrl: cardImage1,
-      category: "아마존 구매대행",
-      categoryStyle: "bg-yellow-400 text-black",
-      title: "반영구샵+구매대행 병행, 월 매출 1억 2천→순수익 4천만 원",
-      tag: "구매대행",
-      amount: "4,000만원",
-    },
-    {
-      href: "/stories/26",
-      imageUrl: cardImage2,
-      category: "노 코딩 홈페이지 제작",
-      categoryStyle: "bg-[#624AF1] text-white",
-      title: "템플릿+AI로 일주일에 300, 대학생 월 매출 2,000만 원 대학생",
-      tag: "지식창업",
-      amount: "2,000만원",
-    },
-    {
-      href: "/stories/38",
-      imageUrl: cardImage3,
-      category: "쿠팡 로켓그로스",
-      categoryStyle: "bg-red-600 text-white",
-      title: "쿠팡이 배송·CS 다 해줘요 로켓그로스로 월 매출 1억 잔망킹",
-      tag: "이커머스",
-      amount: "1억원",
-    },
-  ];
+
 
   return (
     <div className="w-full mx-auto max-w-[1200px] px-4">
@@ -158,50 +120,6 @@ const HomePage = () => {
               Foundary 가입하기
             </button>
           </Link>
-        </div>
-      </section>
-
-      {/* NewFoundary 섹션 */}
-      <section className="mt-8 md:mt-12">
-        <h2 className="text-xl md:text-2xl font-bold flex gap-2 text-gray-900 mb-4 md:mb-6 justify-center">
-          <p className="text-[#ff5833]">New</p> Foundary
-        </h2>
-
-        {/* 모바일/태블릿: Swiper */}
-        <div className="block lg:hidden">
-          <Swiper
-            modules={[Pagination, Autoplay]}
-            spaceBetween={16}
-            slidesPerView={1}
-            centeredSlides={false}
-            pagination={{
-              clickable: true,
-              dynamicBullets: true,
-            }}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              320: { slidesPerView: 1, spaceBetween: 12 }, // 작은 폰
-              640: { slidesPerView: 1.2, spaceBetween: 16 }, // 중간 폰 (살짝 다음 슬라이드 보임)
-              768: { slidesPerView: 2, spaceBetween: 20 },
-            }}
-            className="pb-12 new-foundary-swiper"
-          >
-            {newFoundaryCards.map((card, index) => (
-              <SwiperSlide key={index}>
-                <NewFoundaryCard {...card} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        {/* 데스크톱: Grid */}
-        <div className="hidden lg:grid grid-cols-3 gap-3">
-          {newFoundaryCards.map((card, index) => (
-            <NewFoundaryCard key={index} {...card} />
-          ))}
         </div>
       </section>
 
@@ -238,25 +156,6 @@ const HomePage = () => {
         )}
       </main>
 
-      {/* Swiper 커스텀 스타일 */}
-      <style jsx global>{`
-        .new-foundary-swiper .swiper-pagination {
-          text-align: center !important;
-          left: 50% !important;
-          transform: translateX(-50%) !important;
-          width: auto !important;
-        }
-
-        .new-foundary-swiper .swiper-pagination-bullet {
-          background-color: #ff7a00 !important;
-          opacity: 0.3 !important;
-        }
-
-        .new-foundary-swiper .swiper-pagination-bullet-active {
-          background-color: #ff7a00 !important;
-          opacity: 1 !important;
-        }
-      `}</style>
     </div>
   );
 };
