@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
 @layer base {
+
   /* html과 body에 Tailwind의 'font-sans' 유틸리티를 적용 */
   html,
   body {
-    @apply font-sans; /* 👈 이렇게 수정해야 합니다! */
+    @apply font-sans;
+    /* 👈 이렇게 수정해야 합니다! */
   }
 }
 
 * {
   box-sizing: border-box;
 }
+
 /* --- 1. 기본 스타일 (데스크탑) --- */
 
 /* 패딩 (이건 기존과 동일) */
@@ -38,14 +41,19 @@
   margin-bottom: 1rem;
 }
 
+.bn-default-styles h1 {
+  font-size: 28px !important;
+}
+
 /* --- 2. 모바일 반응형 스타일 (768px 이하) --- */
 @media (max-width: 768px) {
   .bn-editor {
-    padding-left: 0px !important ;
-    padding-right: 0px !important ;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
+
   .bn-default-styles h1 {
-    font-size: 22px !important;
+    font-size: 24px !important;
   }
 
   .bn-default-styles h3 {
@@ -110,6 +118,7 @@
 
 /* 모바일에서는 화살표 크기 줄이기 */
 @media (max-width: 640px) {
+
   .swiper-custom-navigation .swiper-button-next,
   .swiper-custom-navigation .swiper-button-prev {
     width: 32px;

@@ -44,6 +44,26 @@ export interface Database {
                     replied_at?: string | null
                 }
             }
+            likes: {
+                Row: {
+                    id: number
+                    created_at: string
+                    user_id: string
+                    story_id: number
+                }
+                Insert: {
+                    id?: number
+                    created_at?: string
+                    user_id: string
+                    story_id: number
+                }
+                Update: {
+                    id?: number
+                    created_at?: string
+                    user_id?: string
+                    story_id?: number
+                }
+            }
             payment_history: {
                 Row: {
                     id: string

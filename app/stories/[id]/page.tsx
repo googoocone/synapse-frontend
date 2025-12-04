@@ -1,3 +1,4 @@
+import StoryHeader from "@/components/stories/StoryHeader";
 import StoryDetailTabs from "./StoryDetailTabs";
 
 import { createClient } from "@/utils/supabase/server";
@@ -53,7 +54,7 @@ const StoryDetailPage = async ({ params }: Props) => {
   const isLoggedIn = !!user;
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-white">
       {/* 상단 히어로 이미지 */}
       <div className="relative w-full h-64 md:h-96 bg-gray-200">
         <div
@@ -63,45 +64,20 @@ const StoryDetailPage = async ({ params }: Props) => {
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative pb-16">
-        <div className="bg-white rounded-lg shadow-xl p-6 md:p-10">
-          <header className="mb-8">
-            {isAdmin && (
-              <div className="flex justify-end mb-4">
-                <Link href={`/admin/edit/${story.id}`}>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
-                    <Edit size={16} />
-                    편집하기
-                  </button>
-                </Link>
-              </div>
-            )}
-
-            <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-4">
-              {story.title}
-            </h1>
-
-            <div className="flex flex-wrap items-center text-sm text-gray-500 gap-x-4 gap-y-2">
-              <div className="flex items-center">
-                <Calendar size={14} className="mr-1.5" />
-                <span>{new Date(story.created_at).toLocaleDateString()}</span>
-              </div>
-              <div className="flex items-center">
-                <Tag size={14} className="mr-1.5" />
-                <span>{story.tags?.join(", ")}</span>
-              </div>
-              <div className="flex items-center">
-                <Badge size={14} className="mr-1.5" />
-                <span>{story.badges?.join(", ")}</span>
-              </div>
+      <div className="max-w-5xl mx-auto mt-2 relative pb-16">
+        <div className="bg-white p-6 md:p-10">
+          {isAdmin && (
+            <div className="flex justify-end mb-4">
+              <Link href={`/admin/edit/${story.id}`}>
+                <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
+                  <Edit size={16} />
+                  편집하기
+                </button>
+              </Link>
             </div>
+          )}
 
-            <div className="mt-6 border-t pt-6">
-              <p className="text-lg font-bold text-gray-800">
-                핵심 성과: <span className="text-blue-600">{story.metric}</span>
-              </p>
-            </div>
-          </header>
+          <StoryHeader story={story} />
 
           {/* 👇 여기부터 탭 영역 */}
           <article className="max-w-none">

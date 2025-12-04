@@ -70,44 +70,45 @@ const StoryDetailTabs = ({
   };
 
   return (
-    <div ref={topRef} className="mt-6">
-      {/* 상단 고정되는 탭 영역 */}
-      <div className="sticky top-13 sm:top-15 z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 pb-3">
-        <div className="flex justify-center pt-2">
-          <div className="inline-flex rounded-xl bg-gray-100 p-1 ">
-            {tabs.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => handleTabClick(tab.id)}
-                  className={[
-                    "relative px-4 py-2 text-sm md:text-base font-medium rounded-lg transition-all cursor-pointer",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 cursor-pointer",
-                    isActive
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-500 hover:text-gray-800",
-                  ].join(" ")}
-                >
-                  {tab.label}
-                  {isActive && (
-                    <span className="absolute inset-x-3 -bottom-2 h-0.5 rounded-full bg-orange-500" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* 탭 설명 */}
-        <p className="mt-3 text-xs md:text-sm text-gray-500 text-center">
+    <div ref={topRef} className="mt-6 pb-24">
+      {/* 탭 설명 (상단으로 이동) */}
+      <div className="text-center mb-8">
+        <p className="text-sm md:text-base text-gray-500">
           {tabs.find((t) => t.id === activeTab)?.description}
         </p>
       </div>
 
+      {/* 하단 고정 탭 영역 */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 pb-safe">
+        <div className="max-w-md mx-auto flex justify-around p-2">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => handleTabClick(tab.id)}
+                className={[
+                  "flex-1 py-3 text-sm md:text-base font-medium transition-all cursor-pointer text-center",
+                  isActive
+                    ? "text-gray-900 font-bold"
+                    : "text-gray-400 hover:text-gray-600",
+                ].join(" ")}
+              >
+                <span className="relative">
+                  {tab.label}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500" />
+                  )}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* 콘텐츠 카드 */}
-      <div className="mt-4 rounded-2xl border border-gray-100 bg-gray-50/80 p-4 md:p-6">
+      <div className="mt-8 mx-auto w-full md:w-[720px] ">
         {!hasContent ? (
           <div className="text-sm text-gray-400">
             아직{" "}
@@ -143,7 +144,7 @@ const StoryDetailTabs = ({
                   </div>
                 </div>
 
-                <div className="relative bg-white rounded-xl p-4 md:p-6 shadow-sm border border-gray-100 min-h-[300px] group/container">
+                <div className="relative min-h-[300px] group/container">
                   {/* 왼쪽 클릭 영역 (이전 단계) */}
                   {currentStep > 0 && (
                     <div
