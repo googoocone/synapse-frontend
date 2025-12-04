@@ -59,7 +59,7 @@ export default function LandingPage() {
               <span className="absolute bottom-1 left-0 w-full h-3 md:h-4 bg-yellow-300 -z-10 opacity-70"></span>
               아이디어
             </span>
-            와 수 년간의{" "}
+            와 수년간의{" "}
             <span className="relative inline-block font-bold z-10 px-1">
               {/* 노하우 - Blue Highlight */}
               <span className="absolute bottom-1 left-0 w-full h-3 md:h-4 bg-blue-300 -z-10 opacity-70"></span>

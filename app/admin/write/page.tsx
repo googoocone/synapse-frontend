@@ -27,7 +27,7 @@ const WritePage = () => {
   const [metric, setMetric] = useState("");
 
   const [interviewContent, setInterviewContent] = useState<any>(null);
-  const [guideContent, setGuideContent] = useState<any>(null);
+  const [guideContent, setGuideContent] = useState<any[]>([]);
 
   const [statusMessage, setStatusMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,7 +53,7 @@ const WritePage = () => {
       content: interviewContent,
     };
 
-    const { error } = await supabase.from("stories").insert([storyData]);
+    const { error } = await supabase.from("stories").insert([storyData] as any);
 
     if (error) {
       setStatusMessage(`저장 중 오류 발생: ${error.message}`);
@@ -172,8 +172,62 @@ const WritePage = () => {
               <span className="w-2 h-6 bg-green-500 rounded-full"></span>
               실전 가이드
             </h2>
-            <div className="min-h-[400px]">
-              <Editor onChange={setGuideContent} initialContent={undefined} />
+            <div className="space-y-6">
+              {guideContent?.map((step: any, index: number) => (
+                <div key={index} className="border rounded-lg p-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium text-gray-900">Step {index + 1}</h3>
+                    <button
+                      onClick={() => {
+                        const newContent = [...guideContent];
+                        newContent.splice(index, 1);
+                        setGuideContent(newContent);
+                      }}
+                      className="text-red-500 hover:text-red-600 text-sm"
+                    >
+                      삭제
+                    </button>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      단계 제목
+                    </label>
+                    <input
+                      type="text"
+                      value={step.title}
+                      onChange={(e) => {
+                        const newContent = [...guideContent];
+                        newContent[index].title = e.target.value;
+                        setGuideContent(newContent);
+                      }}
+                      className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="예: 아이템 선정하기"
+                    />
+                  </div>
+                  <div className="min-h-[300px]">
+                    <Editor
+                      onChange={(content: any) => {
+                        const newContent = [...guideContent];
+                        newContent[index].content = content;
+                        setGuideContent(newContent);
+                      }}
+                      initialContent={step.content}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              <button
+                onClick={() => {
+                  setGuideContent([
+                    ...(guideContent || []),
+                    { title: "", content: null },
+                  ]);
+                }}
+                className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-600 transition-colors"
+              >
+                + 단계 추가하기
+              </button>
             </div>
           </div>
         </div>
