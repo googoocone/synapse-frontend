@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import BlockNoteRenderer from "@/components/BlockNoteRenderer";
+import LoginRequestOverlay from "@/components/LoginRequestOverlay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type StoryDetailTabsProps = {
@@ -179,15 +180,16 @@ const StoryDetailTabs = ({
                       />
                     ) : (
                       <div className="relative">
-                        <div className="blur-sm pointer-events-none select-none">
-                          <BlockNoteRenderer
-                            content={guideContent[currentStep].content}
-                          />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="rounded-lg bg-white/95 px-4 py-3 text-sm font-medium text-gray-700 shadow-md">
-                            전체 내용을 보시려면 로그인 해주세요.
+                        <div className="max-h-[400px] overflow-hidden relative">
+                          <div className="pointer-events-none select-none">
+                            <BlockNoteRenderer
+                              content={guideContent[currentStep].content}
+                            />
                           </div>
+                          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-10" />
+                        </div>
+                        <div className="relative z-20 -mt-8">
+                          <LoginRequestOverlay />
                         </div>
                       </div>
                     )}
@@ -218,13 +220,14 @@ const StoryDetailTabs = ({
                   <BlockNoteRenderer content={currentContent} />
                 ) : (
                   <div className="relative">
-                    <div className="blur-sm pointer-events-none select-none">
-                      <BlockNoteRenderer content={currentContent} />
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="rounded-lg bg-white/95 px-4 py-3 text-sm font-medium text-gray-700 shadow-md">
-                        전체 내용을 보시려면 로그인 해주세요.
+                    <div className="max-h-[1500px] overflow-hidden relative">
+                      <div className="pointer-events-none select-none">
+                        <BlockNoteRenderer content={currentContent} />
                       </div>
+                      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-10" />
+                    </div>
+                    <div className="relative z-20 -mt-8">
+                      <LoginRequestOverlay />
                     </div>
                   </div>
                 )}
