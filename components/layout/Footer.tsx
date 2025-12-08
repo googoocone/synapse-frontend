@@ -12,9 +12,12 @@ const Footer = () => {
               <span className="font-medium">사업자등록번호:</span> 875-31-01047
             </p>
             <p>
+              <span className="font-medium">통신판매업신고번호:</span> 2025-화성동탄-5337
+            </p>
+            <p>
               <span className="font-medium">상호명:</span> 뉴씽크
             </p>
-                        <p>
+            <p>
               <span className="font-medium">대표자 명:</span> 박영호
             </p>
             <p>
