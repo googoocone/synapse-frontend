@@ -220,7 +220,7 @@ const StoryDetailTabs = ({
                   <BlockNoteRenderer content={currentContent} />
                 ) : (
                   <div className="relative">
-                    <div className="max-h-[1500px] overflow-hidden relative">
+                    <div className="max-h-[2200px] overflow-hidden relative">
                       <div className="pointer-events-none select-none">
                         <BlockNoteRenderer content={currentContent} />
                       </div>
