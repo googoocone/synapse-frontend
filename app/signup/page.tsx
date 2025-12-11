@@ -188,8 +188,8 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 py-12">
-        <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+      <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md p-4 space-y-6 bg-white rounded-lg shadow-md md:p-8">
           <h1 className="text-2xl font-bold text-center text-gray-900">
             회원가입
           </h1>
@@ -253,7 +253,7 @@ const SignUpPage = () => {
                     setPhoneNumber(formatPhoneNumber(e.target.value))
                   }
                   disabled={isVerified}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833] disabled:bg-gray-100"
+                  className="flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833] disabled:bg-gray-100"
                   placeholder="010-1234-5678"
                   maxLength={13}
                 />
@@ -289,7 +289,7 @@ const SignUpPage = () => {
                     onChange={(e) =>
                       setVerificationCode(e.target.value.replace(/[^0-9]/g, ""))
                     }
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833]"
+                    className="flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff5833]"
                     placeholder="6자리 숫자"
                     maxLength={6}
                   />
