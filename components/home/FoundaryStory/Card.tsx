@@ -146,13 +146,16 @@ const Card = ({ story }: { story: any }) => {
 
           {/* Footer: Price/Metric & Status */}
           <div className="mt-3 pt-3 border-t border-gray-100 flex items-end justify-between">
+            {/* 심사 기간 동안 숨김 처리 */}
+            {/* <div className="flex flex-col">
+                <span className="text-[11px] text-gray-400 font-medium mb-0.5">월 매출</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-lg font-extrabold text-[#ff5833]">
+                    {story.metric}
+                  </span>
+                </div>
+              </div> */}
             <div className="flex flex-col">
-              <span className="text-[11px] text-gray-400 font-medium mb-0.5">월 매출</span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-lg font-extrabold text-[#ff5833]">
-                  {story.metric}
-                </span>
-              </div>
             </div>
 
             {/* Founder Profile Image (Replaces NEW Badge) */}

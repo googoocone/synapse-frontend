@@ -29,7 +29,16 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-gray-300 text-center text-xs text-gray-500">
+
+          <div className="mt-6 pt-4 border-t border-gray-300 text-xs text-gray-500 text-center break-keep">
+            <p className="mb-2">
+              본 서비스는 창업가의 경험을 공유하는 콘텐츠 제공 서비스이며, 구체적인
+              수익을 보장하거나 투자를 권유하는 유사투자자문 서비스가 아닙니다.
+              사업의 결과는 개인의 역량에 따라 다를 수 있습니다.
+            </p>
+          </div>
+
+          <div className="pt-2 text-center text-xs text-gray-500">
             <p>
               &copy; {new Date().getFullYear()} 뉴씽크. All rights reserved.
             </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
+
 import { useState } from "react";
 
 interface InquiryFormData {
@@ -90,22 +90,23 @@ export default function InquiryForm() {
     setSubmitStatus({ type: null, message: "" });
 
     try {
-      const supabase = createClient();
+      // API 라우트를 통해 데이터 전송 (RLS 우회)
+      const response = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          content: formData.content.trim(),
+        }),
+      });
 
-      const { data, error } = await supabase
-        .from("inquiries")
-        .insert([
-          {
-            name: formData.name.trim(),
-            email: formData.email.trim().toLowerCase(),
-            content: formData.content.trim(),
-            status: "pending",
-          },
-        ])
-        .select();
+      const data = await response.json();
 
-      if (error) {
-        throw error;
+      if (!response.ok) {
+        throw new Error(data.error || "문의 접수에 실패했습니다.");
       }
 
       // 성공
@@ -150,8 +151,8 @@ export default function InquiryForm() {
       {submitStatus.type && (
         <div
           className={`mb-6 p-4 rounded-lg ${submitStatus.type === "success"
-              ? "bg-green-50 text-green-800 border border-green-200"
-              : "bg-red-50 text-red-800 border border-red-200"
+            ? "bg-green-50 text-green-800 border border-green-200"
+            : "bg-red-50 text-red-800 border border-red-200"
             }`}
         >
           <p className="font-medium">{submitStatus.message}</p>
@@ -230,8 +231,8 @@ export default function InquiryForm() {
           type="submit"
           disabled={isSubmitting}
           className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-colors ${isSubmitting
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-orange-600 hover:bg-orange-700 active:bg-orange-800"
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-orange-600 hover:bg-orange-700 active:bg-orange-800"
             }`}
         >
           {isSubmitting ? (

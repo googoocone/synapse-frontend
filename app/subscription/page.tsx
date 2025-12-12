@@ -56,7 +56,7 @@ export default function SubscriptionPage() {
         <div className="text-center mb-8 md:mb-12">
           <div className="inline-flex items-center gap-4 mb-6">
             <button className="text-purple-600 font-bold text-lg border-b-2 border-purple-600 pb-2">
-              Foundary 멤버십
+              비즈니스 웹진 & E-Book 멤버십
             </button>
           </div>
 
@@ -64,7 +64,7 @@ export default function SubscriptionPage() {
             <div className="flex items-start gap-4">
               <div className="flex-1">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                  모든 성공 공식 컨텐츠를
+                  모든 비즈니스 웹진과 E-Book을
                   <br />
                   <span className="text-orange-600">1개월간 무료</span>로
                   확인하세요!
@@ -85,7 +85,7 @@ export default function SubscriptionPage() {
               </h3>
             </div>
             <p className="text-sm md:text-base text-gray-600 text-center">
-              지금 가입하면 30일간 무료로 모든 콘텐츠를 이용할 수 있어요
+              지금 가입하면 30일간 무료로 모든 웹진/E-Book을 이용할 수 있어요
             </p>
             <p className="text-xs text-gray-500 text-center mt-2">
               무료 기간 종료 3일 전 알림 • 언제든지 해지 가능
@@ -102,11 +102,10 @@ export default function SubscriptionPage() {
           {/* 12개월 플랜 (추천) */}
           <div
             onClick={() => setSelectedPlan("yearly")}
-            className={`relative bg-white rounded-2xl p-6 cursor-pointer transition-all ${
-              selectedPlan === "yearly"
-                ? "border-2 border-orange-500 shadow-lg"
-                : "border-2 border-gray-200"
-            }`}
+            className={`relative bg-white rounded-2xl p-6 cursor-pointer transition-all ${selectedPlan === "yearly"
+              ? "border-2 border-orange-500 shadow-lg"
+              : "border-2 border-gray-200"
+              }`}
           >
             <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
               <span className="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">
@@ -144,11 +143,10 @@ export default function SubscriptionPage() {
           {/* 1개월 플랜 */}
           <div
             onClick={() => setSelectedPlan("monthly")}
-            className={`relative bg-white rounded-2xl p-6 cursor-pointer transition-all ${
-              selectedPlan === "monthly"
-                ? "border-2 border-orange-500 shadow-lg"
-                : "border-2 border-gray-200"
-            }`}
+            className={`relative bg-white rounded-2xl p-6 cursor-pointer transition-all ${selectedPlan === "monthly"
+              ? "border-2 border-orange-500 shadow-lg"
+              : "border-2 border-gray-200"
+              }`}
           >
             <div className="absolute top-4 left-4">
               <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
