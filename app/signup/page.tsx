@@ -261,7 +261,7 @@ const SignUpPage = () => {
                   type="button"
                   onClick={handleSendCode}
                   disabled={isSending || isVerified || timer > 0}
-                  className="px-4 py-2 text-sm font-medium text-white bg-[#ff5833] rounded-md hover:bg-[#ff5833]/90 disabled:bg-gray-300 disabled:cursor-not-allowed whitespace-nowrap"
+                  className="px-4 py-2 text-sm font-medium text-white bg-[#ff5833] rounded-md hover:bg-[#ff5833]/90 disabled:bg-gray-300 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer"
                 >
                   {isVerified
                     ? "인증완료"
@@ -371,7 +371,7 @@ const SignUpPage = () => {
                 setShowSuccessModal(false);
                 router.push("/login");
               }}
-              className="w-full px-6 py-3 bg-[#ff5833] text-white font-semibold rounded-lg hover:bg-[#ff5833]/90 transition-colors"
+              className="w-full px-6 py-3 bg-[#ff5833] text-white font-semibold rounded-lg hover:bg-[#ff5833]/90 transition-colors cursor-pointer"
             >
               로그인 페이지로 이동
             </button>
