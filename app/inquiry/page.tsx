@@ -149,11 +149,10 @@ export default function InquiryForm() {
       {/* 상태 메시지 */}
       {submitStatus.type && (
         <div
-          className={`mb-6 p-4 rounded-lg ${
-            submitStatus.type === "success"
+          className={`mb-6 p-4 rounded-lg ${submitStatus.type === "success"
               ? "bg-green-50 text-green-800 border border-green-200"
               : "bg-red-50 text-red-800 border border-red-200"
-          }`}
+            }`}
         >
           <p className="font-medium">{submitStatus.message}</p>
         </div>
@@ -230,11 +229,10 @@ export default function InquiryForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-colors ${
-            isSubmitting
+          className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-colors ${isSubmitting
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-orange-600 hover:bg-orange-700 active:bg-orange-800"
-          }`}
+            }`}
         >
           {isSubmitting ? (
             <span className="flex items-center justify-center">
@@ -273,7 +271,7 @@ export default function InquiryForm() {
           <li>문의하신 내용은 영업일 기준 1-2일 내로 답변드립니다.</li>
           <li>답변은 입력하신 이메일 주소로 발송됩니다.</li>
           <li>스팸 메일함도 확인해주세요.</li>
-          <li>긴급한 문의는 contact@foundary.kr로 직접 메일을 보내주세요.</li>
+          <li>긴급한 문의는 foundary1201@gmail.com로 직접 메일을 보내주세요.</li>
         </ul>
       </div>
     </div>
