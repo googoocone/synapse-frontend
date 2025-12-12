@@ -88,7 +88,10 @@ const ContentsPage = () => {
                         {stories.map((story) => (
                             <tr key={story.id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm font-medium text-gray-900">
+                                    <div
+                                        className="text-sm font-medium text-gray-900 max-w-md truncate"
+                                        title={story.title}
+                                    >
                                         {story.title}
                                     </div>
                                 </td>

@@ -26,6 +26,9 @@ const SignUpPage = () => {
   // 성공 모달 state 추가
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  // 회원가입 로딩 state
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
   // 전화번호 형식 자동 변환 (010-1234-5678)
   const formatPhoneNumber = (value: string) => {
     const numbers = value.replace(/[^0-9]/g, "");
@@ -138,52 +141,61 @@ const SignUpPage = () => {
       return;
     }
 
-    // 1. Supabase Auth에 회원가입
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          phone: phoneNumber.replace(/-/g, ""),
+    try {
+      setIsSigningUp(true);
+
+      // 1. Supabase Auth에 회원가입
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            phone: phoneNumber.replace(/-/g, ""),
+          },
         },
-      },
-    });
+      });
 
-    if (error) {
-      setMessage(`오류가 발생했습니다: ${error.message}`);
-      setIsError(true);
-      return;
-    }
+      if (error) {
+        setMessage(`오류가 발생했습니다: ${error.message}`);
+        setIsError(true);
+        return;
+      }
 
-    // 2. profiles 테이블에 저장 (트리거가 실패할 경우를 대비)
-    if (data.user) {
-      // 잠시 대기 (트리거가 실행될 시간)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // 2. profiles 테이블에 저장 (트리거가 실패할 경우를 대비)
+      if (data.user) {
+        // 잠시 대기 (트리거가 실행될 시간)
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // 프로필이 이미 생성되었는지 확인
-      const { data: existingProfile } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("id", data.user.id)
-        .single();
+        // 프로필이 이미 생성되었는지 확인
+        const { data: existingProfile } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("id", data.user.id)
+          .single();
 
-      // 프로필이 없으면 직접 생성
-      if (!existingProfile) {
-        const { error: profileError } = await supabase.from("profiles").insert({
-          id: data.user.id,
-          email: email,
-          phone: phoneNumber.replace(/-/g, ""),
-        });
+        // 프로필이 없으면 직접 생성
+        if (!existingProfile) {
+          const { error: profileError } = await supabase.from("profiles").insert({
+            id: data.user.id,
+            email: email,
+            phone: phoneNumber.replace(/-/g, ""),
+          });
 
-        if (profileError) {
-          console.error("프로필 생성 실패:", profileError);
-          // 에러가 있어도 회원가입은 완료된 상태이므로 계속 진행
+          if (profileError) {
+            console.error("프로필 생성 실패:", profileError);
+            // 에러가 있어도 회원가입은 완료된 상태이므로 계속 진행
+          }
         }
       }
-    }
 
-    // 3. 성공 모달 표시
-    setShowSuccessModal(true);
+      // 3. 성공 모달 표시
+      setShowSuccessModal(true);
+    } catch (error) {
+      setMessage("알 수 없는 오류가 발생했습니다.");
+      setIsError(true);
+    } finally {
+      setIsSigningUp(false);
+    }
   };
 
   return (
@@ -313,10 +325,36 @@ const SignUpPage = () => {
             {/* 가입하기 버튼 */}
             <button
               type="submit"
-              disabled={!isVerified}
-              className="w-full px-4 py-2 text-sm font-medium text-white bg-[#ff5833] rounded-md hover:bg-[#ff5833]/90 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              disabled={!isVerified || isSigningUp}
+              className="w-full px-4 py-2 text-sm font-medium text-white bg-[#ff5833] rounded-md hover:bg-[#ff5833]/90 disabled:bg-gray-300 disabled:cursor-not-allowed cursor-pointer flex justify-center items-center"
             >
-              가입하기
+              {isSigningUp ? (
+                <>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  가입 중...
+                </>
+              ) : (
+                "가입하기"
+              )}
             </button>
           </form>
 
@@ -329,52 +367,82 @@ const SignUpPage = () => {
 
       {/* 성공 모달 */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl animate-in fade-in zoom-in duration-300">
-            {/* 성공 아이콘 */}
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-12 h-12 text-green-600" />
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
+            {/* 상단 디자인 바 */}
+            <div className="h-4 bg-gradient-to-r from-[#ff5833] to-[#ff8c33]"></div>
+
+            <div className="p-8 md:p-10">
+              {/* 성공 아이콘 */}
+              <div className="flex justify-center mb-8">
+                <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center ring-4 ring-orange-100">
+                  <div className="w-20 h-20 bg-[#ff5833] rounded-full flex items-center justify-center shadow-lg shadow-orange-200">
+                    <CheckCircle className="w-12 h-12 text-white" />
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* 제목 */}
-            <h2 className="text-2xl font-bold text-center text-gray-900 mb-3">
-              회원가입 성공! 🎉
-            </h2>
+              {/* 제목 */}
+              <h2 className="text-3xl font-bold text-center text-gray-900 mb-4 tracking-tight">
+                회원가입 완료!
+              </h2>
 
-            {/* 메시지 */}
-            <div className="space-y-4 mb-6">
-              <p className="text-center text-gray-700">
-                <span className="font-semibold text-[#ff5833]">{email}</span>로
-                <br />
-                인증 이메일을 발송했어요!
-              </p>
+              {/* 메시지 */}
+              <div className="space-y-6 mb-8 text-center">
+                <p className="text-lg text-gray-600">
+                  <span className="font-bold text-gray-900 border-b-2 border-orange-200">
+                    {email}
+                  </span>
+                  로<br /> 인증 메일을 발송했습니다.
+                </p>
 
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  📧 <span className="font-semibold">이메일 확인 필수!</span>
-                  <br />
-                  받은 편지함을 확인하고 인증 링크를 클릭하여 계정을
-                  활성화해주세요.
+                <div className="bg-blue-50 border border-blue-100 rounded-xl p-5 text-left transform transition-transform hover:scale-105 duration-200">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-blue-100 p-2 rounded-lg text-2xl">
+                      📩
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-blue-900 text-lg mb-1">
+                        이메일 인증이 필요해요!
+                      </h3>
+                      <p className="text-blue-800 text-sm leading-relaxed">
+                        계정을 활성화하려면 이메일함에서{" "}
+                        <span className="font-bold underline">인증 링크</span>를
+                        꼭 클릭해주세요. 인증을 완료해야 로그인이 가능합니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-500 bg-gray-50 py-3 px-4 rounded-lg inline-block">
+                  메일이 보이지 않는다면 <span className="font-semibold text-gray-700">스팸 메일함</span>을 확인해주세요.
                 </p>
               </div>
 
-              <p className="text-xs text-gray-500 text-center">
-                이메일이 오지 않았나요? 스팸 메일함을 확인해보세요.
-              </p>
+              {/* 버튼 */}
+              <button
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  router.push("/login");
+                }}
+                className="w-full px-6 py-4 bg-[#ff5833] text-white text-lg font-bold rounded-xl hover:bg-[#ff7a5c] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>로그인하러 가기</span>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </button>
             </div>
-
-            {/* 버튼 */}
-            <button
-              onClick={() => {
-                setShowSuccessModal(false);
-                router.push("/login");
-              }}
-              className="w-full px-6 py-3 bg-[#ff5833] text-white font-semibold rounded-lg hover:bg-[#ff5833]/90 transition-colors cursor-pointer"
-            >
-              로그인 페이지로 이동
-            </button>
           </div>
         </div>
       )}
