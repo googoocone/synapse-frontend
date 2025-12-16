@@ -44,7 +44,6 @@ export default function HeaderMenu({ isLanding = false }: HeaderMenuProps) {
 
   const menuItems = [
     { label: "홈", href: "/" },
-    { label: "Foundary 구독", href: "/subscription" },
     // { label: "고객센터", href: "/support" },
     { label: "1:1문의", href: "/inquiry" },
   ];
@@ -83,8 +82,8 @@ export default function HeaderMenu({ isLanding = false }: HeaderMenuProps) {
                     href={item.href}
                     onClick={() => setIsOpen(false)}
                     className={`block px-4 py-3 rounded-lg font-medium transition-colors ${isLanding
-                        ? "text-black hover:bg-gray-100"
-                        : "text-white hover:bg-black/10"
+                      ? "text-black hover:bg-gray-100"
+                      : "text-white hover:bg-black/10"
                       }`}
                   >
                     {item.label}
@@ -109,8 +108,8 @@ export default function HeaderMenu({ isLanding = false }: HeaderMenuProps) {
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={`block px-4 py-3 transition-colors font-medium ${isLanding
-                          ? "text-black hover:bg-gray-100"
-                          : "text-white hover:bg-black/10"
+                        ? "text-black hover:bg-gray-100"
+                        : "text-white hover:bg-black/10"
                         }`}
                     >
                       {item.label}

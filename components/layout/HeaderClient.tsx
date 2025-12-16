@@ -34,21 +34,10 @@ export default function HeaderClient({ user }: HeaderClientProps) {
             <div className="flex items-center justify-end gap-2 sm:gap-3 text-xs sm:text-sm">
                 {user ? (
                     <>
-                        <Link href="/subscription" className="hidden md:block">
-                            <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md font-semibold transition-colors cursor-pointer whitespace-nowrap bg-[#222222] text-white hover:bg-gray-800">
-                                구독하기
-                            </button>
-                        </Link>
                         <LogoutButton />
                     </>
                 ) : (
                     <>
-                        {/* 구독하기 버튼 - 데스크탑에서만 보임 */}
-                        <Link href="/subscription" className=" md:block">
-                            <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md font-semibold transition-colors cursor-pointer whitespace-nowrap bg-[#222222] text-white hover:bg-gray-800">
-                                구독하기
-                            </button>
-                        </Link>
                         <Link href="/login">
                             <button className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md font-semibold transition-colors cursor-pointer whitespace-nowrap bg-gray-100 text-black hover:bg-gray-200">
                                 로그인
